@@ -9,8 +9,9 @@
 <html>
   <head>
     <title>Homepage</title>
+    <link href="/resources/css/main.css" rel="stylesheet" />
   </head>
   <body>
-    <h1>Add "/greeting.jsp" to the url!</h1>
+    <h1 id="instructions">Add "/greeting.jsp" to the url!</h1>
   </body>
 </html>
