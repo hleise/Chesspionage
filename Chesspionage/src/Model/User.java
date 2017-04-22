@@ -16,6 +16,12 @@ public class User{
         losses = 0;
     }
 
+    public User(String username){
+        this.username = username;
+        wins = 0;
+        losses = 0;
+    }
+
     //Methods
     public boolean login(String username, String password){
         /*
