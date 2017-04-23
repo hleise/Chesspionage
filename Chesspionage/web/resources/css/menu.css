@@ -15,6 +15,7 @@ html {
 
 .menu-button:hover {
     cursor: pointer;
+    background: #1b81e5;
 }
 
 #menu-container {

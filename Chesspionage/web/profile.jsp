@@ -16,7 +16,7 @@
 </head>
 <body>
 <div id="menu-container">
-    <div class="menu-button" id="back-button" onclick="location.href='javascript:history.back()'">
+    <div class="menu-button" id="back-button" onclick="location.href='/index.jsp'">
         ❮ Back
     </div>
     <h1>hleise</h1>
