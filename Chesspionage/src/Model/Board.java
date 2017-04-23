@@ -18,9 +18,10 @@ public class Board {
     }
 
     //Methods
-    public boolean setupBoard(){
+    public boolean setupBoard(int player){
         if(boardSetup) return false;
         //Set board pieces
+        boardSetup = true;
         return true;
     }
 
