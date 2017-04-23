@@ -7,5 +7,6 @@ public class TestDriver {
     //Used for test driven development
     public static void main(String[] args){
         UserTests.main(null);
+        BoardTests.main(null);
     }
 }

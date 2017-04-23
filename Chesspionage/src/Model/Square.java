@@ -12,7 +12,8 @@ public class Square {
 
     //Constructors
     public Square(){
-        //Do something
+        isHighlighted = false;
+        piece = null;
     }
 
     //Methods
