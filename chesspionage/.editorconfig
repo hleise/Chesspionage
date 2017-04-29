@@ -1,0 +1,20 @@
+# Vivo Applications LLC EditorConfig File
+#
+# An editor config file is a meta file that provides
+# rules that IDEs and text editors should follow.
+# This ensures that every programmer's editor uses the same
+# styles such as using spaces instead of tabs,
+# and an indent of size 2 instead of 4.
+
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
