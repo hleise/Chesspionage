@@ -13,12 +13,14 @@ public class Game {
   public Player[] players;
   public int playerTurn;
   public int winner;
+  public boolean gameOver;
   private Map<Character, Integer> pieceCounts;
   private Map<Character, PieceType> pieceType;
 
   //Constructors
   public Game(int numPlayers) {
     gameBoard = new Board();
+    gameOver = false;
 
     this.pieceCounts = new HashMap<Character, Integer>() {{
       put('t', 16); // Total piece count
@@ -39,16 +41,34 @@ public class Game {
       put('k', PieceType.KING);
     }};
 
-    setPieces(PieceColor.LIGHT, pieceCounts);
+    setPieces(PieceColor.LIGHT, new HashMap<Character, Integer>(pieceCounts));
 
     if (numPlayers == 2) { // Human Player
-      setPieces(PieceColor.DARK, pieceCounts);
+      setPieces(PieceColor.DARK, new HashMap<Character, Integer>(pieceCounts));
     } else { // CPU Player
-      autoSetPieces(PieceColor.DARK, pieceCounts);
+      autoSetPieces(PieceColor.DARK, new HashMap<Character, Integer>(pieceCounts));
     }
+
+    runGame();
   }
 
   //Methods
+
+  public void runGame() {
+    while (!gameOver) {
+      Utilities.clearScreen();
+      View.drawVisibleBoard(gameBoard.getBoardState(), PieceColor.LIGHT);
+
+      System.out.println("Press Enter to return to see black pieces");
+      new Scanner(System.in).nextLine();
+
+      Utilities.clearScreen();
+      View.drawVisibleBoard(gameBoard.getBoardState(), PieceColor.DARK);
+
+      System.out.println("Press Enter to return to the menu");
+      new Scanner(System.in).nextLine();
+    }
+  }
 
   public void setPieces(PieceColor playerColor, Map<Character, Integer> pieceCounts)
   {
