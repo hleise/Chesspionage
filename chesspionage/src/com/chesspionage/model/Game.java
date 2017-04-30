@@ -1,6 +1,7 @@
 package com.chesspionage.model;
 
 import java.util.*;
+import java.util.regex.*;
 
 import com.chesspionage.Utilities;
 import com.chesspionage.View;
@@ -72,25 +73,29 @@ public class Game {
         System.out.println("Enter a piece and position (ex: p->a2): ");
         String position = reader.next().toLowerCase();
 
-        if (pieceCounts.get(position.charAt(0)) == null) {
-          System.out.println("The piece you entered does not exist");
+        if (!Pattern.matches("[prnbqk]->[a-h][1-8]$", position)) {
+          System.out.println("Invalid command (ex: p->h1)");
         } else {
-          if (pieceCounts.get(position.charAt(0)) == 0) {
-            System.out.println("You've already placed all of that piece type");
+          if (pieceCounts.get(position.charAt(0)) == null) {
+            System.out.println("The piece you entered does not exist");
           } else {
-            RankAndFile coordinate = new RankAndFile(position.substring(3, 5));
-            if (gameBoard.isValidStartingPosition(coordinate) && gameBoard.squareIsEmpty(coordinate)) {
-              currPiece = pieceType.get(position.charAt(0));
-              pieceCounts.put(position.charAt(0), pieceCounts.get(position.charAt(0)) - 1);
-
-              Piece piece = new Piece(playerColor, currPiece, coordinate);
-              piece.setRankAndFile(coordinate.getRank(), coordinate.getFile());
-              gameBoard.squares[coordinate.getRank()][coordinate.getFile()].setPiece(piece);
-
-              set = true;
-              totalPieces--;
+            if (pieceCounts.get(position.charAt(0)) == 0) {
+              System.out.println("You've already placed all of that piece type");
             } else {
-              System.out.println("Invalid coordinate: rank = " + coordinate.getRank() + " file = " + coordinate.getFile());
+              RankAndFile coordinate = new RankAndFile(position.substring(3, 5));
+              if (gameBoard.isValidStartingPosition(coordinate) && gameBoard.squareIsEmpty(coordinate)) {
+                currPiece = pieceType.get(position.charAt(0));
+                pieceCounts.put(position.charAt(0), pieceCounts.get(position.charAt(0)) - 1);
+
+                Piece piece = new Piece(playerColor, currPiece, coordinate);
+                piece.setRankAndFile(coordinate.getRank(), coordinate.getFile());
+                gameBoard.squares[coordinate.getRank()][coordinate.getFile()].setPiece(piece);
+
+                set = true;
+                totalPieces--;
+              } else {
+                System.out.println("Invalid coordinate: rank = " + coordinate.getRank() + " file = " + coordinate.getFile());
+              }
             }
           }
         }
