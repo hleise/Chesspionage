@@ -2,20 +2,22 @@ package com.chesspionage.model;
 
 public class Board {
   //Fields
-  private Piece[] pieceSet;
-  private Square[] squares;
+  private Piece[][] pieceSet;
+  private Square[][] squares;
   private boolean[] boardSetup;
 
   //Constructors
   public Board() {
     //Initialize board fields
-    pieceSet = new Piece[32];
-    squares = new Square[64]; //Maybe increase the size of this by 32 to hold captured pieces?
+    pieceSet = new Piece[2][16];
+    squares = new Square[8][8]; //Maybe increase the size of this by 32 to hold captured pieces?
     boardSetup = new boolean[2];
     boardSetup[0] = false;
     boardSetup[1] = false;
-    for (int i = 0; i < 64; i++) {
-      squares[i] = new Square();
+    for (int i = 0; i < 8; i++) {
+      for(int j = 0; j < 8; j++){
+        squares[i][j] = new Square();
+      }
     }
   }
 
@@ -37,19 +39,21 @@ public class Board {
       pieceColor = PieceColor.DARK;
     }
 
-    for (int i = 0; i < 16; i++) {
-      //Place pieces in this array to start
-      Piece newPiece = new Piece(pieceColor, piecePlacement[i]);
-      pieceSet[player * 16 + i] = newPiece;
-      squares[player * 48 + i].setPiece(newPiece);
+    for (int i = 0; i < 2; i++) {
+      for(int j = 0; j < 8; j++) {
+        //Place pieces in this array to start
+        Piece newPiece = new Piece(pieceColor, piecePlacement[i]);
+        pieceSet[player][8*i + j] = newPiece;
+        squares[player*6 + i][j].setPiece(newPiece);
+      }
     }
 
     boardSetup[player] = true;
     return true;
   }
 
-  public Square[] getBoardState() {
-    //Return the contents of all pieces on the board
+  public Square[][] getBoardState() {
+    //Return the contents of all squares on the board
     return squares;
   }
 }
