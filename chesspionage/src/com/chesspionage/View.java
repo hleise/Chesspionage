@@ -4,11 +4,10 @@ import com.chesspionage.model.PieceColor;
 import com.chesspionage.model.PieceType;
 import com.chesspionage.model.Square;
 
-import java.util.Scanner;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.ArrayList;
 
+/* View contains fields and methods relevant to the Chesspionage graphics */
 public abstract class View {
 
   private static String boardString = ""
@@ -47,7 +46,7 @@ public abstract class View {
     + "    *           *           *           *           *           *           *           *           *\n"
     + "    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
 
-  private static char[] board = boardString.toCharArray();
+  private static char[] board = boardString.toCharArray(); // Convert board to a character array to be accessed later
 
   private static Map<PieceType, Character> pieceStrings = new HashMap<PieceType, Character>() {{
     put(PieceType.PAWN, 'P');
@@ -93,6 +92,7 @@ public abstract class View {
     }
   }};
 
+  /* Draw the board with a specified user's piece identities shown. */
   public static void drawVisibleBoard(Square squares[][], PieceColor playerColor) {
     for (int squareRank = 0; squareRank < squares.length; squareRank++) {
       for (int squareFile = 0; squareFile < squares[squareRank].length; squareFile++) {
@@ -113,6 +113,7 @@ public abstract class View {
     System.out.println(board);
   }
 
+  /* Draw the board with no piece identities shown. */
   public static void drawHiddenBoard(Square squares[][]) {
     for (int squareRank = 0; squareRank < squares.length; squareRank++) {
       for (int squareFile = 0; squareFile < squares[squareRank].length; squareFile++) {

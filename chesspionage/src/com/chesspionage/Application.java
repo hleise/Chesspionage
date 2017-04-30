@@ -1,19 +1,15 @@
 package com.chesspionage;
 
 import com.chesspionage.model.Game;
-import com.chesspionage.model.User;
 import com.chesspionage.Utilities;
 
 import java.util.Scanner;
 
+/* Application is the main controller for Chesspionage */
 public abstract class Application {
   static Scanner user_input = new Scanner(System.in);
-  private User user;
 
-  private Application() {
-    user = new User();
-  }
-
+  /* Prints the main Chesspionage menu */
   private static void printMenu() {
     System.out.println("****************************************************");
     System.out.println("             Welcome to Chesspionage!               ");
@@ -24,6 +20,7 @@ public abstract class Application {
     System.out.println("  4. Quit");
   }
 
+  /* Listens for menu user input and performs the correct action. */
   private static void getMenuInput() {
     String command = user_input.next();
 
@@ -46,6 +43,7 @@ public abstract class Application {
     }
   }
 
+  /* Prints the rules for Chesspionage */
   private static void printRules() {
     System.out.println("Chesspionage Rules:");
     System.out.println();
@@ -61,6 +59,7 @@ public abstract class Application {
     new Scanner(System.in).nextLine();
   }
 
+  /* Loops back to the menu until the user decides to quit */
   public static void main(String[] args) {
     while(true) {
       Utilities.clearScreen();

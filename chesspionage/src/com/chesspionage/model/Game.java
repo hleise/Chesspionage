@@ -1,12 +1,12 @@
 package com.chesspionage.model;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.*;
 
 import com.chesspionage.Utilities;
 import com.chesspionage.View;
 
+/* Game controls the game logic for single and two player games */
 public class Game {
   //Fields
   public Board gameBoard;
@@ -14,32 +14,29 @@ public class Game {
   public int playerTurn;
   public int winner;
   public boolean gameOver;
-  private Map<Character, Integer> pieceCounts;
-  private Map<Character, PieceType> pieceType;
+  private final Map<Character, Integer> pieceCounts = new HashMap<Character, Integer>() {{
+    put('t', 16); // Total piece count
+    put('p', 8);
+    put('r', 2);
+    put('n', 2);
+    put('b', 2);
+    put('q', 1);
+    put('k', 1);
+  }};
+  private final Map<Character, PieceType> pieceType = new HashMap<Character, PieceType>() {{
+    put('p', PieceType.PAWN);
+    put('r', PieceType.ROOK);
+    put('n', PieceType.KNIGHT);
+    put('b', PieceType.BISHOP);
+    put('q', PieceType.QUEEN);
+    put('k', PieceType.KING);
+  }};
 
   //Constructors
+  /* Creates a new game instance given a certain number of players. */
   public Game(int numPlayers) {
     gameBoard = new Board();
     gameOver = false;
-
-    this.pieceCounts = new HashMap<Character, Integer>() {{
-      put('t', 16); // Total piece count
-      put('p', 8);
-      put('r', 2);
-      put('n', 2);
-      put('b', 2);
-      put('q', 1);
-      put('k', 1);
-    }};
-
-    this.pieceType = new HashMap<Character, PieceType>() {{
-      put('p', PieceType.PAWN);
-      put('r', PieceType.ROOK);
-      put('n', PieceType.KNIGHT);
-      put('b', PieceType.BISHOP);
-      put('q', PieceType.QUEEN);
-      put('k', PieceType.KING);
-    }};
 
     setPieces(PieceColor.LIGHT, new HashMap<Character, Integer>(pieceCounts));
 
@@ -54,6 +51,7 @@ public class Game {
 
   //Methods
 
+  /* Loops through game moves, until the game is over */
   public void runGame() {
     while (!gameOver) {
       Utilities.clearScreen();
@@ -64,6 +62,7 @@ public class Game {
     }
   }
 
+  /* Queries the player to set their pieces */
   public void setPieces(PieceColor playerColor, Map<Character, Integer> pieceCounts)
   {
     while (pieceCounts.get('t') != 0)
@@ -127,6 +126,7 @@ public class Game {
     }
   }
 
+  /* Randomly sets pieces */
   public void autoSetPieces(PieceColor playerColor, Map<Character, Integer> pieceCounts) {
     while (pieceCounts.get('t') != 0) {
       ArrayList<PieceType> pieceArray = pieceMapToArray(pieceCounts);
@@ -143,6 +143,7 @@ public class Game {
     }
   }
 
+  /* Converts a pieceMap to a pieceArray */
   private ArrayList<PieceType> pieceMapToArray(Map<Character, Integer> pieceMap) {
     ArrayList<PieceType> pieceArray = new ArrayList<PieceType>();
     for (Character key: pieceMap.keySet()) {
@@ -156,6 +157,7 @@ public class Game {
     return pieceArray;
   }
 
+  /* Ends the game */
   public void endGame() {
     //Do something
   }
