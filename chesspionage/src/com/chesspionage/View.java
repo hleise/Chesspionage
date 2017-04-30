@@ -8,9 +8,6 @@ import java.util.Scanner;
 import java.util.Map;
 import java.util.HashMap;
 
-/**
- * Created by Hunter on 4/29/17.
- */
 public abstract class View {
 
   private static String boardString = ""
@@ -95,16 +92,20 @@ public abstract class View {
     }
   }};
 
-  public static void drawVisibleBoard(Square squares[], PieceColor playerColor) {
-    for (Square square: squares) {
-      if (square.getPiece().getPieceType().equals(PieceType.NONE)) {
-        continue;
-      }
+  public static void drawVisibleBoard(Square squares[][], PieceColor playerColor) {
+    for (int squareRank = 0; squareRank < squares.length; squareRank++) {
+      for (int squareFile = 0; squareFile < squares[squareRank].length;) {
+        Square square = squares[squareRank][squareFile];
 
-      if (square.getPiece().getPieceColor().equals(playerColor)) {
-        board[boardPositions.get(square.getCoordinate())] = pieceStrings.get(square.getPiece().getPieceType());
-      } else {
-        board[boardPositions.get(square.getCoordinate())] = colorStrings.get(square.getPiece().getPieceColor());
+        if (square.getPiece().getPieceType().equals(PieceType.NONE)) {
+          continue;
+        }
+
+        if (square.getPiece().getPieceColor().equals(playerColor)) {
+          board[boardPositions.get(square.getCoordinate())] = pieceStrings.get(square.getPiece().getPieceType());
+        } else {
+          board[boardPositions.get(square.getCoordinate())] = colorStrings.get(square.getPiece().getPieceColor());
+        }
       }
     }
 

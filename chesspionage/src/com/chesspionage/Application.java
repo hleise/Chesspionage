@@ -1,15 +1,12 @@
 package com.chesspionage;
 
 import com.chesspionage.model.Game;
+import com.chesspionage.model.PieceColor;
 import com.chesspionage.model.User;
 import com.chesspionage.Utilities;
 import com.chesspionage.model.PieceType;
 
 import java.util.Scanner;
-
-/**
- * Created by Raymond on 4/22/17.
- */
 
 public abstract class Application {
   static Scanner user_input = new Scanner(System.in);
@@ -32,18 +29,6 @@ public abstract class Application {
 
   private static void getMenuInput() {
     String command = user_input.next();
-
-    PieceType[] whitePieces = new PieceType[16];
-
-    for (int i = 0; i < 16; i++) {
-      whitePieces[i] = PieceType.PAWN;
-    }
-
-    PieceType[] blackPieces = new PieceType[16];
-
-    for (int i = 0; i < 16; i++) {
-      blackPieces[i] = PieceType.PAWN;
-    }
 
     switch(command) {
       case("1"):

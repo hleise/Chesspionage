@@ -1,11 +1,7 @@
 package com.chesspionage.model;
-import com.sun.xml.internal.bind.v2.model.core.NonElement;
 
 import java.util.*;
 
-/**
- * Created by Raymond on 4/22/17.
- */
 public class Game {
   //Fields
   public Board gameboard;
@@ -15,7 +11,7 @@ public class Game {
 
   //Constructors
   public Game(int numPlayers) {
-    //Initialize fields
+    createGame(numPlayers);
   }
 
   //Methods
@@ -117,19 +113,16 @@ public class Game {
 
     return pieceSet;
   }
-  public void createGame(int player2Type) {
+  public void createGame(int numPlayers) {
     System.out.println("Place yer pieces:");
     PieceType[] p1PieceSet = new PieceType[16];
     PieceType[] p2PieceSet = new PieceType[16];
     p1PieceSet = setPieces();
 
-    if (player2Type == 1) // Human player
-    {
+    if (numPlayers == 2) { // Human Player
       System.out.println("Place yer pieces:");
       p2PieceSet = setPieces();
-    }
-    else // CPU Player
-    {
+    } else { // CPU Player
       PieceType aiSet[] = {
                            PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN,
                            PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN,

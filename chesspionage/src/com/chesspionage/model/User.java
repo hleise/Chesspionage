@@ -1,8 +1,5 @@
 package com.chesspionage.model;
 
-/*
-Created by Raymond 4/22/17
- */
 public class User {
   //Fields
   private String username;
