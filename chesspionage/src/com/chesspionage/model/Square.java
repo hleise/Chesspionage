@@ -11,7 +11,7 @@ public class Square {
   //Constructors
   public Square(int rank, int file) {
     this.coordinate = new RankAndFile(rank, file);
-    this.coordinate.setRankAndFile(coordinate.intToString.get(file) + rank);
+    this.coordinate.setRankAndFile(coordinate.intToString.get(file) + (rank+1));
     this.piece = null;
   }
 

@@ -83,14 +83,14 @@ public class Game {
               currPiece = pieceType.get(position.charAt(0));
               pieceCounts.put(position.charAt(0), pieceCounts.get(position.charAt(0)) - 1);
 
-              Piece piece = new Piece(playerColor, currPiece);
+              Piece piece = new Piece(playerColor, currPiece, coordinate);
               piece.setRankAndFile(coordinate.getRank(), coordinate.getFile());
               gameBoard.squares[coordinate.getRank()][coordinate.getFile()].setPiece(piece);
 
               set = true;
               totalPieces--;
             } else {
-              System.out.println("Invalid coordinate");
+              System.out.println("Invalid coordinate: rank = " + coordinate.getRank() + " file = " + coordinate.getFile());
             }
           }
         }

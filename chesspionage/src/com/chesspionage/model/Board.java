@@ -12,7 +12,7 @@ public class Board {
     squares = new Square[8][8];
     for (int i = 0; i < 8; i++) {
       for(int j = 0; j < 8; j++){
-        squares[i][j] = new Square(i + 1, j + 1);
+        squares[i][j] = new Square(i, j);
       }
     }
   }
@@ -28,8 +28,8 @@ public class Board {
   }
 
   public boolean isValidStartingPosition(RankAndFile coordinate) {
-    if (Arrays.asList(1, 2, 7, 8).contains(coordinate.getRank())) {
-      if (coordinate.getFile() > 0 && coordinate.getFile() <= 8) {
+    if (Arrays.asList(1, 2, 7, 8).contains(coordinate.getRank()+1)) {
+      if (coordinate.getFile()+1 > 0 && coordinate.getFile()+1 <= 8) {
         return true;
       }
     }
