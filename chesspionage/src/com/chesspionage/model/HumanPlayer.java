@@ -33,7 +33,7 @@ public class HumanPlayer implements Player {
   }
 
   //Methods
-  public void makeMove(Square[] squares) {
+  public void makeMove(Square[][] squares) {
     String command = user_input.next();
     while(true){
       switch(command.toLowerCase()){
@@ -64,14 +64,15 @@ public class HumanPlayer implements Player {
           //Move logic
           pattern = Pattern.compile("");
           String[] splitCommand = Pattern.compile("").split(command);
-          int fromIndex = (Integer.parseInt(splitCommand[0])-1)*8 + columnToInt.get(splitCommand[1]);
-          int toIndex = (Integer.parseInt(splitCommand[4])-1)*8 + columnToInt.get(splitCommand[5]);
-          Piece playerPiece = squares[fromIndex].getPiece();
-          Piece enemyPiece = squares[toIndex].getPiece();
-          if (playerPiece == null || playerPiece.getPieceColor() != pieceColor || enemyPiece.getPieceColor() == pieceColor) {
+          Square fromSquare = squares[Integer.parseInt(splitCommand[1])-1][columnToInt.get(splitCommand[0])];
+          Square toSquare = squares[Integer.parseInt(splitCommand[5])-1][columnToInt.get(splitCommand[4])];
+          Piece playerPiece = fromSquare.getPiece();
+          Piece enemyPiece = toSquare.getPiece();
+          if (playerPiece == null || playerPiece.getPieceColor() != pieceColor || (enemyPiece != null && enemyPiece.getPieceColor() == pieceColor)) {
             System.out.println("Invalid command. Please try again");
             break;
           }
+//          if(playerPiece.validMoves(squares).contains(fromSquare))
           return;
       }
 

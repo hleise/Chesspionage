@@ -2,13 +2,13 @@ package com.chesspionage.model;
 
 public class Piece {
   //Fields
-  private int rank;
-  private int file;
-  private boolean isCaptured;
-  private boolean isVisible;
-  private boolean hasMoved;
-  private PieceColor pieceColor;
-  private PieceType pieceType;
+  protected int rank;
+  protected int file;
+  protected boolean isCaptured;
+  protected boolean isVisible;
+  protected boolean hasMoved;
+  protected PieceColor pieceColor;
+  protected PieceType pieceType;
 
   //Constructor;
   public Piece(PieceColor pieceColor, PieceType pieceType) {
@@ -67,5 +67,9 @@ public class Piece {
     if(!hasMoved){
       hasMoved = true;
     }
+  }
+
+  public boolean getHasMoved(){
+    return hasMoved;
   }
 }
