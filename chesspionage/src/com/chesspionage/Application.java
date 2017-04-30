@@ -1,13 +1,11 @@
 package com.chesspionage;
 
 import com.chesspionage.model.Game;
-import com.chesspionage.model.Piece;
 import com.chesspionage.model.User;
 import com.chesspionage.Utilities;
 import com.chesspionage.model.PieceType;
 
 import java.util.Scanner;
-import java.util.ArrayList;
 
 /**
  * Created by Raymond on 4/22/17.
@@ -50,13 +48,11 @@ public abstract class Application {
     switch(command) {
       case("1"):
         Utilities.clearScreen();
-        View.drawStartBoard(whitePieces, blackPieces);
-        // Game onePlayerGame = new Game(1);
+        Game onePlayerGame = new Game(1);
         break;
       case("2"):
         Utilities.clearScreen();
-        View.drawStartBoard(whitePieces, blackPieces);
-        // Game twoPlayerGame = new Game(2);
+        Game twoPlayerGame = new Game(2);
         break;
       case("3"):
         Utilities.clearScreen();
