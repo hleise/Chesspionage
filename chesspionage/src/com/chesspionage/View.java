@@ -112,5 +112,21 @@ public abstract class View {
 
     System.out.println(board);
   }
+
+  public static void drawHiddenBoard(Square squares[][]) {
+    for (int squareRank = 0; squareRank < squares.length; squareRank++) {
+      for (int squareFile = 0; squareFile < squares[squareRank].length; squareFile++) {
+        Square square = squares[squareRank][squareFile];
+
+        if (square.getPiece() == null) {
+          continue;
+        }
+
+        board[boardPositions.get(square.getCoordinate())] = colorStrings.get(square.getPiece().getPieceColor());
+      }
+    }
+
+    System.out.println(board);
+  }
 }
 

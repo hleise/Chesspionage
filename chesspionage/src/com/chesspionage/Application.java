@@ -21,8 +21,7 @@ public abstract class Application {
     System.out.println("  1. Single Player");
     System.out.println("  2. Two Player");
     System.out.println("  3. How to Play");
-    System.out.println("  4. Profile");
-    System.out.println("  5. Quit");
+    System.out.println("  4. Quit");
   }
 
   private static void getMenuInput() {
@@ -42,10 +41,6 @@ public abstract class Application {
         printRules();
         break;
       case("4"):
-        Utilities.clearScreen();
-        profile();
-        break;
-      case("5"):
         Utilities.quitChesspionage();
         break;
     }
@@ -53,14 +48,6 @@ public abstract class Application {
 
   private static void printRules() {
     System.out.println("This is the rules screen");
-    System.out.println();
-    System.out.println("Press Enter to return to the menu");
-
-    new Scanner(System.in).nextLine();
-  }
-
-  private static void profile() {
-    System.out.println("I'll figure this out later");
     System.out.println();
     System.out.println("Press Enter to return to the menu");
 

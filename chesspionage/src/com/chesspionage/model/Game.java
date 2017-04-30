@@ -57,13 +57,7 @@ public class Game {
   public void runGame() {
     while (!gameOver) {
       Utilities.clearScreen();
-      View.drawVisibleBoard(gameBoard.getBoardState(), PieceColor.LIGHT);
-
-      System.out.println("Press Enter to return to see black pieces");
-      new Scanner(System.in).nextLine();
-
-      Utilities.clearScreen();
-      View.drawVisibleBoard(gameBoard.getBoardState(), PieceColor.DARK);
+      View.drawHiddenBoard(gameBoard.getBoardState());
 
       System.out.println("Press Enter to return to the menu");
       new Scanner(System.in).nextLine();
