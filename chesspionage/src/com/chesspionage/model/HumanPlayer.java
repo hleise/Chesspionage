@@ -7,9 +7,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Raymond on 4/23/17.
- */
 public class HumanPlayer implements Player {
   /*
     Player's Control over the game

@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-/**
- * Created by Raymond on 4/30/17.
- */
 public class RankAndFile {
   //Fields
   private int rank;
