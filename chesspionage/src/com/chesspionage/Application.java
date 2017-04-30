@@ -2,6 +2,7 @@ package com.chesspionage;
 
 import com.chesspionage.model.Game;
 import com.chesspionage.model.User;
+
 import java.util.Scanner;
 
 /**
@@ -9,28 +10,28 @@ import java.util.Scanner;
  */
 
 public class Application {
-    //Fields
-    private User user;
-    private Game game;
+  //Fields
+  private User user;
+  private Game game;
 
-    //Constructors
-    public Application(){
-        //Do something
-        user = new User();
-    }
+  //Constructors
+  public Application() {
+    //Do something
+    user = new User();
+  }
 
-    //Methods
-    public void startGame(){
-        //Create an instance of the game and run it
-    }
+  //Methods
+  public void startGame() {
+    //Create an instance of the game and run it
+  }
 
-    public void changeSettings(){
-        //View user settings, later add customization
-    }
+  public void changeSettings() {
+    //View user settings, later add customization
+  }
 
-    public void howToPlay(){
-        //Pull up the "How to Play" screen
-    }
+  public void howToPlay() {
+    //Pull up the "How to Play" screen
+  }
 
   public static void main(String[] args) {
     System.out.print("\033[H\033[2J");
