@@ -8,7 +8,6 @@ import java.util.regex.*;
 public class TestDriver {
   //Used for test driven development
   public static void main(String[] args) {
-    UserTests.main(null);
     BoardTests.main(null);
 
     String string = "e1->e4";
