@@ -47,10 +47,17 @@ public abstract class Application {
   }
 
   private static void printRules() {
-    System.out.println("This is the rules screen");
+    System.out.println("Chesspionage Rules:");
     System.out.println();
-    System.out.println("Press Enter to return to the menu");
+    System.out.println("1. Chesspionage is a chess variant in which players cannot see the identity of their opponent's pieces.");
+    System.out.println("2. Players begin the game by choosing the locations of their pieces in the first two rows of their side of the board.");
+    System.out.println("3. Then, just like normal chess, players take turns moving their pieces.");
+    System.out.println("4. Based on the way the opponent’s pieces move, players can begin to infer said pieces’ identities");
+    System.out.println("5. The game ends once a king is captured");
+    System.out.println();
 
+
+    System.out.println("Press Enter to return to the menu");
     new Scanner(System.in).nextLine();
   }
 
