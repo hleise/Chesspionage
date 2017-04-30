@@ -1,6 +1,8 @@
 package com.chesspionage.model;
 
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Board {
   //Fields
@@ -27,13 +29,41 @@ public class Board {
     return squares;
   }
 
-  public boolean isValidStartingPosition(RankAndFile coordinate) {
-    if (Arrays.asList(1, 2, 7, 8).contains(coordinate.getRank()+1)) {
-      if (coordinate.getFile()+1 > 0 && coordinate.getFile()+1 <= 8) {
+  public boolean isValidStartingPosition(RankAndFile coordinate, PieceColor playerColor) {
+    ArrayList<RankAndFile> validStartingPositions = getValidStartingPositions(playerColor);
+    for (RankAndFile position: validStartingPositions) {
+      if (coordinate.equals(position)) {
         return true;
       }
     }
     return false;
+  }
+
+  public ArrayList<RankAndFile> getValidStartingPositions(PieceColor playerColor) {
+    ArrayList<RankAndFile> validPositions = new ArrayList<RankAndFile>();
+    if (playerColor == PieceColor.LIGHT) {
+      for (int rank = 0; rank < 2; rank++) {
+        for (int file = 0; file < 8; file++) {
+          RankAndFile coordinate = new RankAndFile(rank, file);
+          if (squareIsEmpty(coordinate)) {
+            validPositions.add(coordinate);
+          }
+        }
+      }
+    } else if (playerColor == PieceColor.DARK) {
+      for (int rank = 6; rank < 8; rank++) {
+        for (int file = 0; file < 8; file++) {
+          RankAndFile coordinate = new RankAndFile(rank, file);
+          if (squareIsEmpty(coordinate)) {
+            validPositions.add(coordinate);
+          }
+        }
+      }
+    } else {
+      System.out.println("getValidStartingPositions received non-valid PieceColor");
+      System.exit(-1);
+    }
+    return validPositions;
   }
 
   public boolean squareIsEmpty(RankAndFile coordinate) {

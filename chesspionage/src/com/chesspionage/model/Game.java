@@ -1,5 +1,6 @@
 package com.chesspionage.model;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.*;
 
@@ -12,26 +13,15 @@ public class Game {
   public Player[] players;
   public int playerTurn;
   public int winner;
+  private Map<Character, Integer> pieceCounts;
+  private Map<Character, PieceType> pieceType;
 
   //Constructors
   public Game(int numPlayers) {
     gameBoard = new Board();
 
-    setPieces(PieceColor.LIGHT);
-
-    if (numPlayers == 2) { // Human Player
-      setPieces(PieceColor.DARK);
-    } else { // CPU Player
-      aiSetPieces();
-    }
-  }
-
-  //Methods
-
-  public void setPieces(PieceColor playerColor)
-  {
-    int totalPieces = 16;
-    Map<Character, Integer> pieceCounts = new HashMap<Character, Integer>() {{
+    this.pieceCounts = new HashMap<Character, Integer>() {{
+      put('t', 16); // Total piece count
       put('p', 8);
       put('r', 2);
       put('n', 2);
@@ -39,7 +29,8 @@ public class Game {
       put('q', 1);
       put('k', 1);
     }};
-    Map<Character, PieceType> pieceType = new HashMap<Character, PieceType>() {{
+
+    this.pieceType = new HashMap<Character, PieceType>() {{
       put('p', PieceType.PAWN);
       put('r', PieceType.ROOK);
       put('n', PieceType.KNIGHT);
@@ -48,7 +39,20 @@ public class Game {
       put('k', PieceType.KING);
     }};
 
-    while (totalPieces != 0)
+    setPieces(PieceColor.LIGHT, pieceCounts);
+
+    if (numPlayers == 2) { // Human Player
+      setPieces(PieceColor.DARK, pieceCounts);
+    } else { // CPU Player
+      //autoSetPieces(PieceColor.DARK, pieceCounts);
+    }
+  }
+
+  //Methods
+
+  public void setPieces(PieceColor playerColor, Map<Character, Integer> pieceCounts)
+  {
+    while (pieceCounts.get('t') != 0)
     {
       Utilities.clearScreen();
       View.drawVisibleBoard(gameBoard.getBoardState(), playerColor);
@@ -73,28 +77,34 @@ public class Game {
         System.out.println("Enter a piece and position (ex: p->a2): ");
         String position = reader.next().toLowerCase();
 
-        if (!Pattern.matches("[prnbqk]->[a-h][1-8]$", position)) {
-          System.out.println("Invalid command (ex: p->h1)");
+        if (position.equals("random")) {
+          autoSetPieces(playerColor, pieceCounts);
+          pieceCounts.put('t', 0);
+          set = true;
         } else {
-          if (pieceCounts.get(position.charAt(0)) == null) {
-            System.out.println("The piece you entered does not exist");
+          if (!Pattern.matches("^[prnbqk]->[a-h][1-8]$", position)) {
+            System.out.println("Invalid command (ex: p->h1)");
           } else {
-            if (pieceCounts.get(position.charAt(0)) == 0) {
-              System.out.println("You've already placed all of that piece type");
+            if (pieceCounts.get(position.charAt(0)) == null) {
+              System.out.println("The piece you entered does not exist");
             } else {
-              RankAndFile coordinate = new RankAndFile(position.substring(3, 5));
-              if (gameBoard.isValidStartingPosition(coordinate) && gameBoard.squareIsEmpty(coordinate)) {
-                currPiece = pieceType.get(position.charAt(0));
-                pieceCounts.put(position.charAt(0), pieceCounts.get(position.charAt(0)) - 1);
-
-                Piece piece = new Piece(playerColor, currPiece, coordinate);
-                piece.setRankAndFile(coordinate.getRank(), coordinate.getFile());
-                gameBoard.squares[coordinate.getRank()][coordinate.getFile()].setPiece(piece);
-
-                set = true;
-                totalPieces--;
+              if (pieceCounts.get(position.charAt(0)) == 0) {
+                System.out.println("You've already placed all of that piece type");
               } else {
-                System.out.println("Invalid coordinate: rank = " + coordinate.getRank() + " file = " + coordinate.getFile());
+                RankAndFile coordinate = new RankAndFile(position.substring(3, 5));
+                if (gameBoard.isValidStartingPosition(coordinate, playerColor) && gameBoard.squareIsEmpty(coordinate)) {
+                  currPiece = pieceType.get(position.charAt(0));
+                  pieceCounts.put(position.charAt(0), pieceCounts.get(position.charAt(0)) - 1);
+
+                  Piece piece = new Piece(playerColor, currPiece, coordinate);
+                  piece.setRankAndFile(coordinate.getRank(), coordinate.getFile());
+                  gameBoard.squares[coordinate.getRank()][coordinate.getFile()].setPiece(piece);
+
+                  set = true;
+                  pieceCounts.put('t', pieceCounts.get('t') - 1);
+                } else {
+                  System.out.println("Invalid coordinate: rank = " + coordinate.getRank() + " file = " + coordinate.getFile());
+                }
               }
             }
           }
@@ -103,15 +113,35 @@ public class Game {
     }
   }
 
-  public void aiSetPieces() {
-    PieceType aiSet[] = {
-      PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN,
-      PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN,
-      PieceType.ROOK, PieceType.ROOK, PieceType.KNIGHT, PieceType.KNIGHT,
-      PieceType.BISHOP, PieceType.BISHOP, PieceType.QUEEN, PieceType.KING
-    };
+  public void autoSetPieces(PieceColor playerColor, Map<Character, Integer> pieceCounts) {
+    while (pieceCounts.get('t') != 0) {
+      ArrayList<PieceType> pieceArray = pieceMapToArray(pieceCounts);
+      ArrayList<RankAndFile> startingPositions = gameBoard.getValidStartingPositions(playerColor);
+      Collections.shuffle(startingPositions);
 
-    Collections.shuffle(Arrays.asList(aiSet));
+      for (RankAndFile position: startingPositions) {
+        Piece piece = new Piece(playerColor, pieceArray.get(0), position);
+        piece.setRankAndFile(position.getRank(), position.getFile());
+        gameBoard.squares[position.getRank()][position.getFile()].setPiece(piece);
+        pieceArray.remove(0);
+      }
+    }
+
+    System.out.println("Press Enter to return to confirm piece placements");
+    new Scanner(System.in).nextLine();
+  }
+
+  private ArrayList<PieceType> pieceMapToArray(Map<Character, Integer> pieceMap) {
+    ArrayList<PieceType> pieceArray = new ArrayList<PieceType>();
+    for (Character key: pieceMap.keySet()) {
+      if (key != 't') {
+        while (pieceMap.get(key) > 0) {
+          pieceArray.add(pieceType.get(key));
+          pieceMap.put(key, pieceMap.get(key) - 1);
+        }
+      }
+    }
+    return pieceArray;
   }
 
   public void endGame() {

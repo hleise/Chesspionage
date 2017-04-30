@@ -80,4 +80,19 @@ public class RankAndFile {
   }
 
   public void setFile(int file){ this.file = file; }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (!RankAndFile.class.isAssignableFrom(obj.getClass())) {
+      return false;
+    }
+    final RankAndFile other = (RankAndFile) obj;
+    if ((this.rank == other.getRank()) && (this.file != other.getFile())) {
+      return true;
+    }
+    return false;
+  }
 }
