@@ -5,11 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+/* RankAndFile represents the coordinate system in Chesspionage */
 public class RankAndFile {
   //Fields
-  private int rank;
-  private int file;
-  String rankAndFile;
+  private int rank; // aka row in chess terms
+  private int file; // aka column in chess terms
+  String rankAndFile; // coordinate in chess notation such as 'h7'
   public final Map<String, Integer> stringToInt = new HashMap<String, Integer>() {{
     put("a",0);
     put("b",1);
