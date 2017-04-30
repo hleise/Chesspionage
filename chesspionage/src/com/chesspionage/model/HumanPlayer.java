@@ -62,17 +62,27 @@ public class HumanPlayer implements Player {
             break;
           }
           //Move logic
-          pattern = Pattern.compile("");
-          String[] splitCommand = Pattern.compile("").split(command);
-          Square fromSquare = squares[Integer.parseInt(splitCommand[1])-1][columnToInt.get(splitCommand[0])];
-          Square toSquare = squares[Integer.parseInt(splitCommand[5])-1][columnToInt.get(splitCommand[4])];
-          Piece playerPiece = fromSquare.getPiece();
-          Piece enemyPiece = toSquare.getPiece();
+          String[] splitCommand = Pattern.compile("->").split(command);
+          RankAndFile fromSquare = new RankAndFile(splitCommand[0]);
+          RankAndFile toSquare = new RankAndFile(splitCommand[1]);
+          Piece playerPiece = squares[fromSquare.getRank()][fromSquare.getFile()].getPiece();
+          Piece enemyPiece = squares[toSquare.getRank()][toSquare.getRank()].getPiece();
           if (playerPiece == null || playerPiece.getPieceColor() != pieceColor || (enemyPiece != null && enemyPiece.getPieceColor() == pieceColor)) {
             System.out.println("Invalid command. Please try again");
             break;
           }
-//          if(playerPiece.validMoves(squares).contains(fromSquare))
+          if(!playerPiece.getValidMoves(squares).contains(toSquare)){
+            System.out.println("Invalid command. Please try again");
+            break;
+          }
+          else{
+            playerPiece.setRankAndFile(toSquare.getRank(),toSquare.getFile());
+            squares[fromSquare.getRank()][fromSquare.getFile()].setPiece(null);
+            squares[toSquare.getRank()][toSquare.getFile()].setPiece(playerPiece);
+            if(enemyPiece != null){
+              enemyPiece.setCaptured();;
+            }
+          }
           return;
       }
 
