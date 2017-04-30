@@ -150,7 +150,10 @@ public class Piece {
             break;
           }
         }
-        if(pieceType != PieceType.QUEEN){ break; }
+        if(pieceType != PieceType.QUEEN){
+          //Add logic for castling
+          break;
+        }
       case BISHOP:
         //Up and right
         int i = coordinate.getRank()+1;
@@ -214,8 +217,39 @@ public class Piece {
         }
         break;
       case KNIGHT:
+        //Up and right
+        int longLeg = 2;
+        int shortLeg = 1;
+        if(squares[coordinate.getRank()+longLeg][coordinate.getFile()+shortLeg].getPiece()== null || squares[coordinate.getRank()+longLeg][coordinate.getFile()+shortLeg].getPiece().pieceColor != pieceColor)
+          validMoves.add(new RankAndFile(coordinate.getRank()+longLeg,coordinate.getFile()+shortLeg));
+        if(squares[coordinate.getRank()+shortLeg][coordinate.getFile()+longLeg].getPiece() == null || squares[coordinate.getRank()+shortLeg][coordinate.getFile()+longLeg].getPiece().pieceColor != pieceColor)
+          validMoves.add(new RankAndFile(coordinate.getRank()+shortLeg,coordinate.getFile()+longLeg));
+        //Up and left
+        if(squares[coordinate.getRank()+longLeg][coordinate.getFile()-shortLeg].getPiece() == null || squares[coordinate.getRank()+longLeg][coordinate.getFile()-shortLeg].getPiece().pieceColor != pieceColor)
+          validMoves.add(new RankAndFile(coordinate.getRank()+longLeg,coordinate.getFile()-shortLeg));
+        if(squares[coordinate.getRank()+shortLeg][coordinate.getFile()-longLeg].getPiece() == null || squares[coordinate.getRank()+shortLeg][coordinate.getFile()-longLeg].getPiece().pieceColor != pieceColor)
+          validMoves.add(new RankAndFile(coordinate.getRank()+shortLeg,coordinate.getFile()-longLeg));
+        //Down and left
+        if(squares[coordinate.getRank()-longLeg][coordinate.getFile()-shortLeg].getPiece() == null || squares[coordinate.getRank()-longLeg][coordinate.getFile()-shortLeg].getPiece().pieceColor != pieceColor)
+          validMoves.add(new RankAndFile(coordinate.getRank()-longLeg,coordinate.getFile()-shortLeg));
+        if(squares[coordinate.getRank()-shortLeg][coordinate.getFile()-longLeg].getPiece() == null || squares[coordinate.getRank()-shortLeg][coordinate.getFile()-longLeg].getPiece().pieceColor != pieceColor)
+          validMoves.add(new RankAndFile(coordinate.getRank()-shortLeg,coordinate.getFile()-longLeg));
+        //Down and right
+        if(squares[coordinate.getRank()-longLeg][coordinate.getFile()+shortLeg].getPiece() == null || squares[coordinate.getRank()-longLeg][coordinate.getFile()+shortLeg].getPiece().pieceColor != pieceColor)
+          validMoves.add(new RankAndFile(coordinate.getRank()-longLeg,coordinate.getFile()+shortLeg));
+        if(squares[coordinate.getRank()-shortLeg][coordinate.getFile()+longLeg].getPiece() == null || squares[coordinate.getRank()-shortLeg][coordinate.getFile()+longLeg].getPiece().pieceColor != pieceColor)
+          validMoves.add(new RankAndFile(coordinate.getRank()-shortLeg,coordinate.getFile()+longLeg));
         break;
       case KING:
+        for(int x = -1; x < 2; x++){
+          for(int y = -1; y < 2; y++){
+            if(x != 0 && y != 0){
+              if(squares[coordinate.getRank()+x][coordinate.getFile()+y].getPiece() == null || squares[coordinate.getRank()+x][coordinate.getFile()+y].getPiece().getPieceColor() != pieceColor){
+                validMoves.add(new RankAndFile(coordinate.getRank()+x,coordinate.getFile()+y));
+              }
+            }
+          }
+        }
         break;
     }
     return validMoves;
