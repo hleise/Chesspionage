@@ -44,7 +44,7 @@ public class Game {
     if (numPlayers == 2) { // Human Player
       setPieces(PieceColor.DARK, pieceCounts);
     } else { // CPU Player
-      //autoSetPieces(PieceColor.DARK, pieceCounts);
+      autoSetPieces(PieceColor.DARK, pieceCounts);
     }
   }
 
@@ -124,11 +124,9 @@ public class Game {
         piece.setRankAndFile(position.getRank(), position.getFile());
         gameBoard.squares[position.getRank()][position.getFile()].setPiece(piece);
         pieceArray.remove(0);
+        pieceCounts.put('t', pieceCounts.get('t') - 1);
       }
     }
-
-    System.out.println("Press Enter to return to confirm piece placements");
-    new Scanner(System.in).nextLine();
   }
 
   private ArrayList<PieceType> pieceMapToArray(Map<Character, Integer> pieceMap) {
