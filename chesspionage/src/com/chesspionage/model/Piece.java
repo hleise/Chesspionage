@@ -54,6 +54,8 @@ public class Piece {
     return pieceType;
   }
 
+  public PieceColor getPieceColor() { return pieceColor; }
+
   public void setPieceType(PieceType pieceType) {
     if (pieceType == PieceType.PAWN) {
       this.pieceType = pieceType;

@@ -5,8 +5,9 @@ package com.chesspionage.model;
  */
 public class Square {
   //Fields
-  private int i;
-  private int j;
+  private int rank;
+  private int file;
+  private String coordinate;
   private boolean isHighlighted;
   private Piece piece;
 
@@ -29,6 +30,8 @@ public class Square {
   public Piece getPiece() {
     return piece;
   }
+
+  public String getCoordinate() { return coordinate; }
 
   public void setPiece(Piece piece) {
     this.piece = piece;
