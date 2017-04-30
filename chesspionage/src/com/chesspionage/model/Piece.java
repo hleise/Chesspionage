@@ -6,6 +6,7 @@ public class Piece {
   private int file;
   private boolean isCaptured;
   private boolean isVisible;
+  private boolean hasMoved;
   private PieceColor pieceColor;
   private PieceType pieceType;
 
@@ -15,6 +16,7 @@ public class Piece {
     this.pieceType = pieceType;
     isCaptured = false;
     isVisible = false;
+    hasMoved = false;
   }
 
   //Methods
@@ -51,11 +53,19 @@ public class Piece {
     return pieceType;
   }
 
-  public PieceColor getPieceColor() { return pieceColor; }
-
   public void setPieceType(PieceType pieceType) {
     if (pieceType == PieceType.PAWN) {
       this.pieceType = pieceType;
+    }
+  }
+
+  public PieceColor getPieceColor(){
+    return pieceColor;
+  }
+
+  public void setHasMoved(){
+    if(!hasMoved){
+      hasMoved = true;
     }
   }
 }

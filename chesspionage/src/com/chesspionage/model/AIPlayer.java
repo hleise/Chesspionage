@@ -10,7 +10,7 @@ public class AIPlayer implements Player {
   }
 
   //Methods
-  public void makeMove() {
+  public void makeMove(Square[] squares) {
     //Do something
   }
 
