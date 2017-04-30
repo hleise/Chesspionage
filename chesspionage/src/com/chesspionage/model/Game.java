@@ -14,7 +14,7 @@ public class Game {
   public int winner;
 
   //Constructors
-  public Game(int player1, int player2) {
+  public Game(int numPlayers) {
     //Initialize fields
   }
 

@@ -2,6 +2,7 @@ package com.chesspionage;
 
 import com.chesspionage.model.Game;
 import com.chesspionage.model.User;
+import com.chesspionage.Utilities;
 
 import java.util.Scanner;
 
@@ -9,50 +10,72 @@ import java.util.Scanner;
  * Created by Raymond on 4/22/17.
  */
 
-public class Application {
-  //Fields
+public abstract class Application {
+  static Scanner user_input = new Scanner(System.in);
   private User user;
-  private Game game;
 
-  //Constructors
-  public Application() {
-    //Do something
+  private Application() {
     user = new User();
   }
 
-  //Methods
-  public void startGame() {
-    //Create an instance of the game and run it
+  private static void printMenu() {
+    System.out.println("****************************************************");
+    System.out.println("             Welcome to Chesspionage!               ");
+    System.out.println("****************************************************");
+    System.out.println("  1. Solo");
+    System.out.println("  2. Two Player");
+    System.out.println("  3. How to Play");
+    System.out.println("  4. Profile");
+    System.out.println("  5. Quit");
   }
 
-  public void changeSettings() {
-    //View user settings, later add customization
+  private static void getMenuInput() {
+    String command = user_input.next();
+
+    switch(command) {
+      case("1"):
+        Utilities.clearScreen();
+        Game onePlayerGame = new Game(1);
+        break;
+      case("2"):
+        Utilities.clearScreen();
+        Game twoPlayerGame = new Game(2);
+        break;
+      case("3"):
+        Utilities.clearScreen();
+        printRules();
+        break;
+      case("4"):
+        Utilities.clearScreen();
+        profile();
+        break;
+      case("5"):
+        Utilities.quitChesspionage();
+        break;
+    }
   }
 
-  public void howToPlay() {
-    //Pull up the "How to Play" screen
+  private static void printRules() {
+    System.out.println("This is the rules screen");
+    System.out.println();
+    System.out.println("Press Enter to return to the menu");
+
+    new Scanner(System.in).nextLine();
+  }
+
+  private static void profile() {
+    System.out.println("I'll figure this out later");
+    System.out.println();
+    System.out.println("Press Enter to return to the menu");
+
+    new Scanner(System.in).nextLine();
   }
 
   public static void main(String[] args) {
-    System.out.print("\033[H\033[2J");
-    System.out.flush();
-
-    System.out.println("Welcome to Chesspionage!");
-
-    System.out.println("What's your name?");
-
-    Scanner user_input = new Scanner(System.in);
-    String name = user_input.next();
-
-    System.out.print("\033[H\033[2J");
-    System.out.flush();
-
-    System.out.println("Hello " + name);
-    String age = user_input.next();
-
-    System.out.print("\033[H\033[2J");
-    System.out.flush();
-
-    System.out.println("Oh, I remember when I was " + age);
+    while(true) {
+      Utilities.clearScreen();
+      printMenu();
+      getMenuInput();
+    }
   }
 }
