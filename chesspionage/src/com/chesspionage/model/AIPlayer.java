@@ -13,9 +13,4 @@ public class AIPlayer implements Player {
   public void makeMove(Square[] squares) {
     //Do something
   }
-
-  public Square calculateMove() {
-    //Decide on a move based on board state and Strategy
-    return new Square();
-  }
 }

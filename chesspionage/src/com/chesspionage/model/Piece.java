@@ -2,16 +2,16 @@ package com.chesspionage.model;
 
 public class Piece {
   //Fields
-  protected int rank;
-  protected int file;
   protected boolean isCaptured;
   protected boolean isVisible;
   protected boolean hasMoved;
   protected PieceColor pieceColor;
   protected PieceType pieceType;
+  protected RankAndFile coordinate;
 
   //Constructor;
   public Piece(PieceColor pieceColor, PieceType pieceType) {
+    this.coordinate = new RankAndFile(-1, -1);
     this.pieceColor = pieceColor;
     this.pieceType = pieceType;
     isCaptured = false;
@@ -21,16 +21,16 @@ public class Piece {
 
   //Methods
   public int getRank() {
-    return rank;
+    return coordinate.getRank();
   }
 
   public int getFile() {
-    return file;
+    return coordinate.getFile();
   }
 
   public void setRankAndFile(int rank, int file) {
-    this.rank = rank;
-    this.file = file;
+    coordinate.setRank(rank);
+    coordinate.setFile(file);
   }
 
   public boolean isCaptured() {

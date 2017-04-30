@@ -1,10 +1,8 @@
 package com.chesspionage;
 
 import com.chesspionage.model.Game;
-import com.chesspionage.model.PieceColor;
 import com.chesspionage.model.User;
 import com.chesspionage.Utilities;
-import com.chesspionage.model.PieceType;
 
 import java.util.Scanner;
 

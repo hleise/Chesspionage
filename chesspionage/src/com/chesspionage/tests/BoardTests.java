@@ -33,15 +33,5 @@ public class BoardTests {
       PieceType.PAWN,
       PieceType.PAWN
     };
-    System.out.println(board.setupBoard(0, piecePlacement));
-
-    System.out.println("testBoardSetup: Should return false");
-    System.out.println(board.setupBoard(0, piecePlacement));
-
-    System.out.println("testBoardSetup: Should return true");
-    System.out.println(board.setupBoard(1, piecePlacement));
-
-    System.out.println("testBoardSetup: Should return false");
-    System.out.println(board.setupBoard(1, piecePlacement));
   }
 }

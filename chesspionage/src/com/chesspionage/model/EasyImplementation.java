@@ -1,8 +1,7 @@
 package com.chesspionage.model;
 
 public class EasyImplementation implements Strategy {
-  public Square findMove() {
+  public void findMove() {
     //Do something
-    return new Square();
   }
 }

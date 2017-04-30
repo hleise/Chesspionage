@@ -1,34 +1,27 @@
 package com.chesspionage.model;
 
+import com.chesspionage.model.RankAndFile;
+import com.chesspionage.Utilities;
+
 public class Square {
   //Fields
-  private int rank;
-  private int file;
-  private String coordinate;
-  private boolean isHighlighted;
+  private RankAndFile coordinate;
   private Piece piece;
 
   //Constructors
-  public Square() {
-    isHighlighted = false;
-    piece = null;
+  public Square(int rank, int file) {
+    this.coordinate = new RankAndFile(rank, file);
+    this.coordinate.setRankAndFile(coordinate.intToString.get(file) + rank);
+    this.piece = null;
   }
 
   //Methods
-
-  public boolean isHighlighted() {
-    return isHighlighted;
-  }
-
-  public void setHighlighted(boolean highlighted) {
-    isHighlighted = highlighted;
-  }
 
   public Piece getPiece() {
     return piece;
   }
 
-  public String getCoordinate() { return coordinate; }
+  public String getCoordinate() { return this.coordinate.getRankAndFile(); }
 
   public void setPiece(Piece piece) {
     this.piece = piece;

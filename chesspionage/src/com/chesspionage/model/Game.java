@@ -2,140 +2,111 @@ package com.chesspionage.model;
 
 import java.util.*;
 
+import com.chesspionage.Utilities;
+import com.chesspionage.View;
+
 public class Game {
   //Fields
-  public Board gameboard;
+  public Board gameBoard;
   public Player[] players;
   public int playerTurn;
   public int winner;
 
   //Constructors
   public Game(int numPlayers) {
-    createGame(numPlayers);
+    gameBoard = new Board();
+
+    setPieces(PieceColor.LIGHT);
+
+    if (numPlayers == 2) { // Human Player
+      setPieces(PieceColor.DARK);
+    } else { // CPU Player
+      aiSetPieces();
+    }
   }
 
   //Methods
 
-  public PieceType[] setPieces()
+  public void setPieces(PieceColor playerColor)
   {
-    int pieceCount = 16;
-    int pawnCount = 8;
-    int rookCount = 2;
-    int knightCount = 2;
-    int bishopCount = 2;
-    int queenCount = 1;
-    int kingCount = 1;
+    int totalPieces = 16;
+    Map<Character, Integer> pieceCounts = new HashMap<Character, Integer>() {{
+      put('p', 8);
+      put('r', 2);
+      put('n', 2);
+      put('b', 2);
+      put('q', 1);
+      put('k', 1);
+    }};
+    Map<Character, PieceType> pieceType = new HashMap<Character, PieceType>() {{
+      put('p', PieceType.PAWN);
+      put('r', PieceType.ROOK);
+      put('n', PieceType.KNIGHT);
+      put('b', PieceType.BISHOP);
+      put('q', PieceType.QUEEN);
+      put('k', PieceType.KING);
+    }};
 
-    PieceType[] pieceSet = new PieceType[16];
-    String position = "x99";
-
-    while (pieceCount != 0)
+    while (totalPieces != 0)
     {
+      Utilities.clearScreen();
+      View.drawVisibleBoard(gameBoard.getBoardState(), playerColor);
+
       boolean set = false;
-      PieceType currPiece = PieceType.NONE;
       Scanner reader = new Scanner(System.in);
 
+      System.out.println();
+      System.out.println("********************************");
+      System.out.println("        Available Pieces        ");
+      System.out.println("********************************");
+      System.out.println("  P: " + pieceCounts.get('p'));
+      System.out.println("  R: " + pieceCounts.get('r'));
+      System.out.println("  N: " + pieceCounts.get('n'));
+      System.out.println("  B: " + pieceCounts.get('b'));
+      System.out.println("  Q: " + pieceCounts.get('q'));
+      System.out.println("  K: " + pieceCounts.get('k'));
+
       while (!set) {
-        System.out.println(
-          "P: " + pawnCount +
-          "\nR: " + rookCount +
-          "\nN: " + knightCount +
-          "\nB: " + bishopCount +
-          "\nQ: " + queenCount +
-          "\nK: " + kingCount
-        );
+        PieceType currPiece = null;
 
-        System.out.println("Enter a piece and position: ");
-        position = reader.next();
+        System.out.println("Enter a piece and position (ex: p->a2): ");
+        String position = reader.next().toLowerCase();
 
-        switch (position.charAt(0)) {
-          case 'p':
-            if (pawnCount == 0) {
-              System.out.println("No more pawns to place.");
-              break;
+        if (pieceCounts.get(position.charAt(0)) == null) {
+          System.out.println("The piece you entered does not exist");
+        } else {
+          if (pieceCounts.get(position.charAt(0)) == 0) {
+            System.out.println("You've already placed all of that piece type");
+          } else {
+            RankAndFile coordinate = new RankAndFile(position.substring(3, 5));
+            if (gameBoard.isValidStartingPosition(coordinate) && gameBoard.squareIsEmpty(coordinate)) {
+              currPiece = pieceType.get(position.charAt(0));
+              pieceCounts.put(position.charAt(0), pieceCounts.get(position.charAt(0)) - 1);
+
+              Piece piece = new Piece(playerColor, currPiece);
+              piece.setRankAndFile(coordinate.getRank(), coordinate.getFile());
+              gameBoard.squares[coordinate.getRank()][coordinate.getFile()].setPiece(piece);
+
+              set = true;
+              totalPieces--;
+            } else {
+              System.out.println("Invalid coordinate");
             }
-            currPiece = PieceType.PAWN;
-            pawnCount--;
-            set = true;
-            break;
-          case 'k':
-            if (kingCount == 0) {
-              System.out.println("King already placed.");
-              break;
-            }
-            currPiece = PieceType.KING;
-            kingCount--;
-            set = true;
-            break;
-          case 'q':
-            if (queenCount == 0) {
-              System.out.println("Queen already placed.");
-              break;
-            }
-            currPiece = PieceType.QUEEN;
-            queenCount--;
-            set = true;
-            break;
-          case 'n':
-            if (knightCount == 0) {
-              System.out.println("No more knights to place.");
-              break;
-            }
-            currPiece = PieceType.KNIGHT;
-            knightCount--;
-            set = true;
-            break;
-          case 'b':
-            if (bishopCount == 0) {
-              System.out.println("No more bishops to place.");
-              break;
-            }
-            currPiece = PieceType.BISHOP;
-            bishopCount--;
-            set = true;
-            break;
-          case 'r':
-            if (rookCount == 0) {
-              System.out.println("No more rooks to place.");
-              break;
-            }
-            currPiece = PieceType.ROOK;
-            rookCount--;
-            set = true;
-            break;
-          default:
-            System.out.println("Piece entered does not exist.");
+          }
         }
       }
-      pieceSet[Character.getNumericValue(position.charAt(1))] = currPiece;
-      pieceCount--;
     }
-
-    return pieceSet;
   }
-  public void createGame(int numPlayers) {
-    System.out.println("Place yer pieces:");
-    PieceType[] p1PieceSet = new PieceType[16];
-    PieceType[] p2PieceSet = new PieceType[16];
-    p1PieceSet = setPieces();
 
-    if (numPlayers == 2) { // Human Player
-      System.out.println("Place yer pieces:");
-      p2PieceSet = setPieces();
-    } else { // CPU Player
-      PieceType aiSet[] = {
-                           PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN,
-                           PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN,
-                           PieceType.ROOK, PieceType.ROOK, PieceType.KNIGHT, PieceType.KNIGHT,
-                           PieceType.BISHOP, PieceType.BISHOP, PieceType.QUEEN, PieceType.KING
-                          };
-      Collections.shuffle(Arrays.asList(aiSet));
-      p2PieceSet = aiSet;
-    }
+  public void aiSetPieces() {
+    PieceType aiSet[] = {
+      PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN,
+      PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN,
+      PieceType.ROOK, PieceType.ROOK, PieceType.KNIGHT, PieceType.KNIGHT,
+      PieceType.BISHOP, PieceType.BISHOP, PieceType.QUEEN, PieceType.KING
+    };
 
-    Board gameBoard = new Board();
-    gameBoard.setupBoard(0, p1PieceSet);
-    gameBoard.setupBoard(1, p2PieceSet);
+    Collections.shuffle(Arrays.asList(aiSet));
   }
 
   public void endGame() {

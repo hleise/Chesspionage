@@ -7,6 +7,7 @@ import com.chesspionage.model.Square;
 import java.util.Scanner;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public abstract class View {
 
@@ -74,14 +75,14 @@ public abstract class View {
   }};
 
   private static Map<String, Integer> boardRanks = new HashMap<String, Integer>() {{
-    put("1", 3 * 102);
-    put("2", 7 * 102);
-    put("3", 11 * 102);
-    put("4", 15 * 102);
-    put("5", 19 * 102);
-    put("6", 23 * 102);
-    put("7", 27 * 102);
-    put("8", 31 * 102);
+    put("8", 3 * 102);
+    put("7", 7 * 102);
+    put("6", 11 * 102);
+    put("5", 15 * 102);
+    put("4", 19 * 102);
+    put("3", 23 * 102);
+    put("2", 27 * 102);
+    put("1", 31 * 102);
   }};
 
   private static Map<String, Integer> boardPositions = new HashMap<String, Integer>() {{
@@ -94,10 +95,10 @@ public abstract class View {
 
   public static void drawVisibleBoard(Square squares[][], PieceColor playerColor) {
     for (int squareRank = 0; squareRank < squares.length; squareRank++) {
-      for (int squareFile = 0; squareFile < squares[squareRank].length;) {
+      for (int squareFile = 0; squareFile < squares[squareRank].length; squareFile++) {
         Square square = squares[squareRank][squareFile];
 
-        if (square.getPiece().getPieceType().equals(PieceType.NONE)) {
+        if (square.getPiece() == null) {
           continue;
         }
 
@@ -110,8 +111,6 @@ public abstract class View {
     }
 
     System.out.println(board);
-
-    new Scanner(System.in).next();
   }
 }
 
