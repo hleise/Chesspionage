@@ -85,7 +85,7 @@ public class HumanPlayer implements Player {
   private void printOptions(){
     System.out.println("Choose an action");
     System.out.println("  1. Move Piece");
-    System.out.println("  2. Show Piece");
+    System.out.println("  2. Show Pieces");
     System.out.println("  3. Show Captured");
     System.out.println("  4. Quit to Menu");
   }
