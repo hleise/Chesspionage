@@ -50,7 +50,7 @@ public class HumanPlayer implements Player {
           Matcher matcher = pattern.matcher(command);
           boolean validCommand = matcher.matches();
           if(!validCommand){
-            System.out.println("Invalid command. Please try again");
+            System.out.println("Invalid command: " + command + " Please try again");
             break;
           }
           //Move logic
@@ -63,8 +63,8 @@ public class HumanPlayer implements Player {
             System.out.println("Invalid command. Please try again");
             break;
           }
-          if(!playerPiece.getValidMoves(squares).contains(toSquare)){
-            System.out.println("Invalid command. Please try again");
+          if(!playerPiece.getValidMoves(squares).contains(toSquare.rankAndFile)){
+            System.out.println("Not a valid move. Please try again");
             break;
           }
           else{

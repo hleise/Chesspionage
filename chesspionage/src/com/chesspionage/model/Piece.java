@@ -84,8 +84,8 @@ public class Piece {
     return hasMoved;
   }
 
-  public LinkedList<RankAndFile> getValidMoves(Square[][] squares){
-    LinkedList<RankAndFile> validMoves = new LinkedList<RankAndFile>();
+  public LinkedList<String> getValidMoves(Square[][] squares){
+    LinkedList<String> validMoves = new LinkedList<String>();
     int X,Y;
     X = coordinate.getRank();
     Y = coordinate.getFile();
@@ -95,18 +95,18 @@ public class Piece {
         if(pieceColor == PieceColor.LIGHT){verticalMovement = 1;}
         else {verticalMovement = -1; }
 
-        if(X + verticalMovement > 7 || X + verticalMovement < 0) {
+        if(X + verticalMovement <= 7 || X + verticalMovement >= 0) {
           if (squares[X + verticalMovement][Y].getPiece() == null) {
-            validMoves.add(new RankAndFile(X + verticalMovement, Y));
+            validMoves.add(new RankAndFile(X + verticalMovement, Y).rankAndFile);
             if (!hasMoved && squares[X + 2 * verticalMovement][Y].getPiece() == null) {
-              validMoves.add(new RankAndFile(X + 2 * verticalMovement, Y));
+              validMoves.add(new RankAndFile(X + 2 * verticalMovement, Y).rankAndFile);
             }
           }
           if (squares[X + verticalMovement][Y - 1].getPiece() != null && squares[X + verticalMovement][Y - 1].getPiece().getPieceColor() != pieceColor) {
-            validMoves.add(new RankAndFile(X + verticalMovement, Y - 1));
+            validMoves.add(new RankAndFile(X + verticalMovement, Y - 1).rankAndFile);
           }
           if (squares[X + verticalMovement][Y + 1].getPiece() != null && squares[X + verticalMovement][Y + 1].getPiece().getPieceColor() != pieceColor) {
-            validMoves.add(new RankAndFile(X + verticalMovement, Y + 1));
+            validMoves.add(new RankAndFile(X + verticalMovement, Y + 1).rankAndFile);
           }
         }
         //Add logic for trapping
@@ -116,9 +116,9 @@ public class Piece {
         //Check Ranks
         for(int i = X+1; i < 8; i++){
           if(squares[i][Y].getPiece() == null){
-            validMoves.add(new RankAndFile(i,Y));
+            validMoves.add(new RankAndFile(i,Y).rankAndFile);
           } else if(squares[i][Y].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(i,Y));
+            validMoves.add(new RankAndFile(i,Y).rankAndFile);
             break;
           } else {
             break;
@@ -126,9 +126,9 @@ public class Piece {
         }
         for(int i = X-1; i >= 0; i--){
           if(squares[i][Y].getPiece() == null){
-            validMoves.add(new RankAndFile(i,Y));
+            validMoves.add(new RankAndFile(i,Y).rankAndFile);
           } else if(squares[i][Y].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(i,Y));
+            validMoves.add(new RankAndFile(i,Y).rankAndFile);
             break;
           } else {
             break;
@@ -138,9 +138,9 @@ public class Piece {
         for(int i = Y+1; i < 8; i++){
           int t;
           if(squares[X][i].getPiece() == null){
-            validMoves.add(new RankAndFile(X,i));
+            validMoves.add(new RankAndFile(X,i).rankAndFile);
           } else if(squares[X][i].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(X,i));
+            validMoves.add(new RankAndFile(X,i).rankAndFile);
             break;
           } else {
             break;
@@ -149,9 +149,9 @@ public class Piece {
         for(int i = Y-1; i >=0; i--){
           int t;
           if(squares[X][i].getPiece() == null){
-            validMoves.add(new RankAndFile(X,i));
+            validMoves.add(new RankAndFile(X,i).rankAndFile);
           } else if(squares[X][i].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(X,i));
+            validMoves.add(new RankAndFile(X,i).rankAndFile);
             break;
           } else {
             break;
@@ -167,9 +167,9 @@ public class Piece {
         int j = Y+1;
         while(i < 8 && j < 8){
           if(squares[i][j].getPiece() == null){
-            validMoves.add(new RankAndFile(i,j));
+            validMoves.add(new RankAndFile(i,j).rankAndFile);
           } else if(squares[i][j].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(i,j));
+            validMoves.add(new RankAndFile(i,j).rankAndFile);
             break;
           } else {
             break;
@@ -182,9 +182,9 @@ public class Piece {
         j = Y-1;
         while(i < 8 && j >= 0){
           if(squares[i][j].getPiece() == null){
-            validMoves.add(new RankAndFile(i,j));
+            validMoves.add(new RankAndFile(i,j).rankAndFile);
           } else if(squares[i][j].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(i,j));
+            validMoves.add(new RankAndFile(i,j).rankAndFile);
             break;
           } else {
             break;
@@ -197,9 +197,9 @@ public class Piece {
         j = Y-1;
         while(i >= 0 && j >= 0){
           if(squares[i][j].getPiece() == null){
-            validMoves.add(new RankAndFile(i,j));
+            validMoves.add(new RankAndFile(i,j).rankAndFile);
           } else if(squares[i][j].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(i,j));
+            validMoves.add(new RankAndFile(i,j).rankAndFile);
             break;
           } else {
             break;
@@ -212,9 +212,9 @@ public class Piece {
         j = Y+1;
         while(i >= 0 && j < 8){
           if(squares[i][j].getPiece() == null){
-            validMoves.add(new RankAndFile(i,j));
+            validMoves.add(new RankAndFile(i,j).rankAndFile);
           } else if(squares[i][j].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(i,j));
+            validMoves.add(new RankAndFile(i,j).rankAndFile);
             break;
           } else {
             break;
@@ -228,34 +228,34 @@ public class Piece {
         int longLeg = 2;
         int shortLeg = 1;
         if(X+longLeg < 8 && Y+shortLeg < 8 && (squares[X+longLeg][Y+shortLeg].getPiece()== null || squares[X+longLeg][Y+shortLeg].getPiece().pieceColor != pieceColor))
-          validMoves.add(new RankAndFile(X+longLeg,Y+shortLeg));
+          validMoves.add(new RankAndFile(X+longLeg,Y+shortLeg).rankAndFile);
         if(X+shortLeg < 8 && Y+longLeg < 8 && (squares[X+shortLeg][Y+longLeg].getPiece() == null || squares[X+shortLeg][Y+longLeg].getPiece().pieceColor != pieceColor))
-          validMoves.add(new RankAndFile(X+shortLeg,Y+longLeg));
+          validMoves.add(new RankAndFile(X+shortLeg,Y+longLeg).rankAndFile);
         //Up and left
         if(X+longLeg < 8 && Y-shortLeg >= 0 && (squares[X+longLeg][Y-shortLeg].getPiece() == null || squares[X+longLeg][Y-shortLeg].getPiece().pieceColor != pieceColor))
-          validMoves.add(new RankAndFile(X+longLeg,Y-shortLeg));
+          validMoves.add(new RankAndFile(X+longLeg,Y-shortLeg).rankAndFile);
         if(X+shortLeg < 8 && Y-longLeg >= 0 && (squares[X+shortLeg][Y-longLeg].getPiece() == null || squares[X+shortLeg][Y-longLeg].getPiece().pieceColor != pieceColor))
-          validMoves.add(new RankAndFile(X+shortLeg,Y-longLeg));
+          validMoves.add(new RankAndFile(X+shortLeg,Y-longLeg).rankAndFile);
         //Down and left
         if(X-longLeg >=0 && Y-shortLeg >=0 && (squares[X-longLeg][Y-shortLeg].getPiece() == null || squares[X-longLeg][Y-shortLeg].getPiece().pieceColor != pieceColor))
-          validMoves.add(new RankAndFile(X-longLeg,Y-shortLeg));
+          validMoves.add(new RankAndFile(X-longLeg,Y-shortLeg).rankAndFile);
         if(X-shortLeg >=0 && Y-longLeg >=0 && (squares[X-shortLeg][Y-longLeg].getPiece() == null || squares[X-shortLeg][Y-longLeg].getPiece().pieceColor != pieceColor))
-          validMoves.add(new RankAndFile(X-shortLeg,Y-longLeg));
+          validMoves.add(new RankAndFile(X-shortLeg,Y-longLeg).rankAndFile);
         //Down and right
         if(X-longLeg >=0 && Y+shortLeg < 8 && (squares[X-longLeg][Y+shortLeg].getPiece() == null || squares[X-longLeg][Y+shortLeg].getPiece().pieceColor != pieceColor))
-          validMoves.add(new RankAndFile(X-longLeg,Y+shortLeg));
+          validMoves.add(new RankAndFile(X-longLeg,Y+shortLeg).rankAndFile);
         if(X-shortLeg >=0 && Y+longLeg < 8 && (squares[X-shortLeg][Y+longLeg].getPiece() == null || squares[X-shortLeg][Y+longLeg].getPiece().pieceColor != pieceColor))
-          validMoves.add(new RankAndFile(X-shortLeg,Y+longLeg));
+          validMoves.add(new RankAndFile(X-shortLeg,Y+longLeg).rankAndFile);
         break;
       case KING:
         for(int x = -1; x < 2; x++){
           for(int y = -1; y < 2; y++){
             if(x != 0 && y != 0){
-              if(X+x > 7 || X < 0 || Y + y > 7 || Y+y < 0){
-                continue;
-              }
-              if(squares[X+x][Y+y].getPiece() == null || squares[X+x][Y+y].getPiece().getPieceColor() != pieceColor){
-                validMoves.add(new RankAndFile(X+x,Y+y));
+              if(!(X+x > 7 || X+x < 0 || Y + y > 7 || Y+y < 0)) {
+
+                if (squares[X + x][Y + y].getPiece() == null || squares[X + x][Y + y].getPiece().getPieceColor() != pieceColor) {
+                  validMoves.add(new RankAndFile(X + x, Y + y).rankAndFile);
+                }
               }
             }
           }
