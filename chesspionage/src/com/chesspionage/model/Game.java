@@ -53,7 +53,7 @@ public class Game {
   }
 
   //Methods
-  
+
   private void runGame() {
     while (!gameOver) {
       gameOver = playerTurn(0);
