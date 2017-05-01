@@ -14,44 +14,39 @@ public class HumanPlayer implements Player {
   //Fields
   private PieceColor pieceColor;
   private Scanner user_input = new Scanner(System.in);
-  private Map<String,Integer> columnToInt;
 
   //Constructor
   public HumanPlayer(PieceColor pieceColor){
     this.pieceColor = pieceColor;
-    columnToInt.put("a",0);
-    columnToInt.put("b",1);
-    columnToInt.put("c",2);
-    columnToInt.put("d",3);
-    columnToInt.put("e",4);
-    columnToInt.put("f",5);
-    columnToInt.put("g",6);
-    columnToInt.put("h",7);
   }
 
   //Methods
-  public void makeMove(Square[][] squares) {
-    String command = user_input.next();
+  public PlayerAction makeMove(Square[][] squares) {
+
     while(true){
+      String command = user_input.next();
       switch(command.toLowerCase()){
         case("commands"):
           printOptions();
+          break;
         case("2"):
           //Toggle piece logic
-          break;
+          return PlayerAction.TOGGLE;
         case("3"):
         case("captured"):
           //Show captured logic
+
           break;
         case("4"):
         case("quit"):
           //Game exit logic
-          break;
+          System.out.println("Goodbye!");
+          return PlayerAction.QUIT;
         case("1"):
           System.out.println("Enter a string of the form [origin]->[destination] using the coordinates of the board");
           command = user_input.next().toLowerCase();
         default:
-          Pattern pattern = Pattern.compile("[a-h][1-8]->[a-h][1-8]");
+          Pattern pattern = Pattern.compile("^[a-h][1-8]->[a-h][1-8]$");
           Matcher matcher = pattern.matcher(command);
           boolean validCommand = matcher.matches();
           if(!validCommand){
@@ -77,10 +72,11 @@ public class HumanPlayer implements Player {
             squares[fromSquare.getRank()][fromSquare.getFile()].setPiece(null);
             squares[toSquare.getRank()][toSquare.getFile()].setPiece(playerPiece);
             if(enemyPiece != null){
-              enemyPiece.setCaptured();;
+              enemyPiece.setCaptured();
+              System.out.println(enemyPiece.getPieceColor() + " " + enemyPiece.getPieceType() + " captured");
             }
           }
-          return;
+          return PlayerAction.PLAY;
       }
 
     }
