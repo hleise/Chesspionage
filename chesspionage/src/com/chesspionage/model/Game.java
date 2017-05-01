@@ -10,7 +10,7 @@ import com.chesspionage.View;
 public class Game {
   //Fields
   public Board gameBoard;
-  public Player[] players;
+  public Player[] players = new Player[2];
   public int playerTurn;
   public int winner;
   public boolean gameOver;
@@ -39,26 +39,50 @@ public class Game {
     gameOver = false;
 
     setPieces(PieceColor.LIGHT, new HashMap<Character, Integer>(pieceCounts));
+    players[0] = new HumanPlayer(PieceColor.LIGHT);
 
     if (numPlayers == 2) { // Human Player
       setPieces(PieceColor.DARK, new HashMap<Character, Integer>(pieceCounts));
+      players[1] = new HumanPlayer(PieceColor.DARK);
     } else { // CPU Player
       autoSetPieces(PieceColor.DARK, new HashMap<Character, Integer>(pieceCounts));
+      players[1] = new AIPlayer(PieceColor.DARK, SkillLevel.Easy);
     }
 
     runGame();
   }
 
   //Methods
-
-  /* Loops through game moves, until the game is over */
-  public void runGame() {
+  
+  private void runGame() {
     while (!gameOver) {
-      Utilities.clearScreen();
-      View.drawHiddenBoard(gameBoard.getBoardState());
+      gameOver = playerTurn(0);
+      if(gameOver) { break;}
+      gameOver = playerTurn(1);
+    }
+  }
 
-      System.out.println("Press Enter to return to the menu");
-      new Scanner(System.in).nextLine();
+  private boolean playerTurn(int playerNumber){
+    Utilities.clearScreen();
+    View.drawHiddenBoard(gameBoard.getBoardState());
+    PieceColor pieceColor;
+    if(playerNumber == 0){ pieceColor = PieceColor.LIGHT;}
+    else {pieceColor = PieceColor.DARK;}
+    while(true){
+      switch(players[playerNumber].makeMove(gameBoard.getBoardState())){
+        case PLAY:
+          return false;
+        case TOGGLE:
+          Utilities.clearScreen();
+          View.drawVisibleBoard(gameBoard.getBoardState(), pieceColor);
+          System.out.println("Press enter when finished examining board");
+          new Scanner(System.in).nextLine();
+          Utilities.clearScreen();
+          View.drawHiddenBoard(gameBoard.getBoardState());
+          break;
+        case QUIT:
+          return true;
+      }
     }
   }
 
