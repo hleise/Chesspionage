@@ -11,7 +11,7 @@ public class EasyImplementation implements Strategy {
     RankAndFile toSquare = null;
     int fromRank = 0;
     int fromFile = 0;
-    LinkedList<String> validMoves = playerPiece.getValidMoves(squares);
+    LinkedList<String> validMoves = new LinkedList<String>(playerPiece.getValidMoves(squares));
 
     do {
       fromRank = ThreadLocalRandom.current().nextInt(0, 8);
