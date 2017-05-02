@@ -83,6 +83,7 @@ public class HumanPlayer implements Player {
             if(enemyPiece != null){
               enemyPiece.setCaptured();
               System.out.println(enemyPiece.getPieceColor() + " " + enemyPiece.getPieceType() + " captured");
+              if(enemyPiece.getPieceType() == PieceType.KING) return PlayerAction.WIN;
             }
           }
           return PlayerAction.PLAY;
