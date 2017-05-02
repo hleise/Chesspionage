@@ -138,6 +138,7 @@ public class Game {
         PieceType currPiece = null;
 
         System.out.println("Enter a piece and position (ex: p->a2): ");
+        System.out.println("Enter 'random' if you would like to auto set your pieces: ");
         String position = reader.next().toLowerCase();
 
         if (position.equals("random")) {
