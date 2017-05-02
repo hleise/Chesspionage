@@ -91,6 +91,6 @@ public class RankAndFile {
   }
 
   public static String convert(int rank, int file){
-    return intToString.get(rank) + file;
+    return intToString.get(file) + (rank+1);
   }
 }
