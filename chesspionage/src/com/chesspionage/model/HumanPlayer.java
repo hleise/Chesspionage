@@ -70,7 +70,7 @@ public class HumanPlayer implements Player {
           Piece enemyPiece = squares[toSquare.getRank()][toSquare.getRank()].getPiece();
 
           if (playerPiece == null || playerPiece.getPieceColor() != pieceColor || (enemyPiece != null && enemyPiece.getPieceColor() == pieceColor)) {
-            System.out.println("Invalid command. Please try again");
+            System.out.println("Invalid command. Please try again ");
             break;
           }
 
