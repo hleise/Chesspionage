@@ -91,83 +91,19 @@ public class Piece {
     Y = coordinate.getFile();
     switch(pieceType){
       case PAWN:
-        int verticalMovement;
-        if(pieceColor == PieceColor.LIGHT){verticalMovement = 1;}
-        else {verticalMovement = -1; }
-
-        for(int i = -1; i < 2; i++){
-          try{
-            if (squares[X+verticalMovement][Y+i].getPiece() == null){
-              if(i == 0){
-                if(!hasMoved && squares[X+(2*verticalMovement)][Y].getPiece() == null){
-                  //Starting move
-                  validMoves.add(new RankAndFile(X+(2*verticalMovement),Y).getRankAndFile());
-                }
-                //Forward movement
-                validMoves.add(new RankAndFile(X+verticalMovement,Y).getRankAndFile());
-              } else if (squares[X][Y+i].getPiece().getPieceColor() != pieceColor && squares[X-verticalMovement][Y+i].getPiece().getPieceColor() == pieceColor){
-                //Trapping
-                validMoves.add(new RankAndFile(X+verticalMovement, Y+i).getRankAndFile());
-              }
-            } else if(i != 0 && squares[X+verticalMovement][Y+i].getPiece().getPieceColor() != pieceColor){
-              //Capturing
-              validMoves.add(new RankAndFile(X+verticalMovement, Y+i).getRankAndFile());
-            }
-
-          } catch (ArrayIndexOutOfBoundsException e){
-            continue;
-          }
-        }
+        validMoves.addAll(validPawnMoves(squares,X,Y));
         break;
       case QUEEN:
       case ROOK:
-        //Check Ranks
-        for(int i = X+1; i < 8; i++){
-          if(squares[i][Y].getPiece() == null){
-            validMoves.add(new RankAndFile(i,Y).rankAndFile);
-          } else if(squares[i][Y].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(i,Y).rankAndFile);
-            break;
-          } else {
-            break;
+        boolean canMoveUp = true;
+        boolean canMoveDown = true;
+        boolean canMoveLeft = true;
+        boolean canMoveRight = true;
+        for(int i = 0; i < 8; i++){
+          if(canMoveUp){
+
           }
-        }
-        for(int i = X-1; i >= 0; i--){
-          if(squares[i][Y].getPiece() == null){
-            validMoves.add(new RankAndFile(i,Y).rankAndFile);
-          } else if(squares[i][Y].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(i,Y).rankAndFile);
-            break;
-          } else {
-            break;
-          }
-        }
-        //Check Files
-        for(int i = Y+1; i < 8; i++){
-          int t;
-          if(squares[X][i].getPiece() == null){
-            validMoves.add(new RankAndFile(X,i).rankAndFile);
-          } else if(squares[X][i].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(X,i).rankAndFile);
-            break;
-          } else {
-            break;
-          }
-        }
-        for(int i = Y-1; i >=0; i--){
-          int t;
-          if(squares[X][i].getPiece() == null){
-            validMoves.add(new RankAndFile(X,i).rankAndFile);
-          } else if(squares[X][i].getPiece().getPieceColor() != pieceColor){
-            validMoves.add(new RankAndFile(X,i).rankAndFile);
-            break;
-          } else {
-            break;
-          }
-        }
-        if(pieceType != PieceType.QUEEN){
-          //Add logic for castling
-          break;
+
         }
       case BISHOP:
         //Up and right
@@ -269,6 +205,97 @@ public class Piece {
           }
         }
         break;
+    }
+    return validMoves;
+  }
+
+  private LinkedList<String> validPawnMoves(Square[][] squares, int X, int Y){
+    LinkedList<String>  validMoves = new LinkedList<String>();
+    int verticalMovement;
+    if(pieceColor == PieceColor.LIGHT){verticalMovement = 1;}
+    else {verticalMovement = -1; }
+
+    for(int i = -1; i < 2; i++){
+      try{
+        if (squares[X+verticalMovement][Y+i].getPiece() == null){
+          if(i == 0){
+            if(!hasMoved && squares[X+(2*verticalMovement)][Y].getPiece() == null){
+              //Starting move
+              validMoves.add(new RankAndFile(X+(2*verticalMovement),Y).getRankAndFile());
+            }
+            //Forward movement
+            validMoves.add(new RankAndFile(X+verticalMovement,Y).getRankAndFile());
+          } else if (squares[X][Y+i].getPiece().getPieceColor() != pieceColor && squares[X-verticalMovement][Y+i].getPiece().getPieceColor() == pieceColor){
+            //Trapping
+            validMoves.add(new RankAndFile(X+verticalMovement, Y+i).getRankAndFile());
+          }
+        } else if(i != 0 && squares[X+verticalMovement][Y+i].getPiece().getPieceColor() != pieceColor){
+          //Capturing
+          validMoves.add(new RankAndFile(X+verticalMovement, Y+i).getRankAndFile());
+        }
+
+      } catch (ArrayIndexOutOfBoundsException e){
+        continue;
+      }
+    }
+    return validMoves;
+  }
+
+  private LinkedList<String> validRookMoves(Square[][] squares, int X, int Y){
+    LinkedList<String> validMoves = new LinkedList<String>();
+    boolean canGoUp = true;
+    boolean canGoDown = true;
+    boolean canGoLeft = true;
+    boolean canGoRight = true;
+    for(int i = 0; i < 8; i++){
+      if(canGoUp){
+        if(X+i > 7){
+          canGoUp = false;
+        } else {
+          if(squares[X+i][Y].getPiece() == null) {
+            validMoves.add(RankAndFile.convert(X+i, Y));
+          } else if(squares[X+i][Y].getPiece().getPieceColor() != pieceColor){
+            validMoves.add(RankAndFile.convert(X+i, Y));
+            canGoUp = false;
+          }
+        }
+      }
+      if(canGoDown){
+        if(X-i < 7){
+          canGoDown = false;
+        } else {
+          if(squares[X-i][Y].getPiece() == null) {
+            validMoves.add(RankAndFile.convert(X-i, Y));
+          } else if(squares[X-i][Y].getPiece().getPieceColor() != pieceColor){
+            validMoves.add(RankAndFile.convert(X-i, Y));
+            canGoDown = false;
+          }
+        }
+      }
+      if(canGoRight){
+        if(Y+i > 7){
+          canGoRight = false;
+        } else {
+          if(squares[X][Y+i].getPiece() == null) {
+            validMoves.add(RankAndFile.convert(X, Y+i));
+          } else if(squares[X][Y+i].getPiece().getPieceColor() != pieceColor){
+            validMoves.add(RankAndFile.convert(X, Y+i));
+            canGoRight = false;
+          }
+        }
+      }
+      if(canGoRight){
+        if(Y-i < 7){
+          canGoLeft = false;
+        } else {
+          if(squares[X][Y-i].getPiece() == null) {
+            validMoves.add(RankAndFile.convert(X, Y-i));
+          } else if(squares[X][Y-i].getPiece().getPieceColor() != pieceColor){
+            validMoves.add(RankAndFile.convert(X, Y-i));
+            canGoRight = false;
+          }
+        }
+      }
     }
     return validMoves;
   }

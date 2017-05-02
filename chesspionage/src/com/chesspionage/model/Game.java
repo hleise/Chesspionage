@@ -83,6 +83,8 @@ public class Game {
         case CAPTURED:
           System.out.println(gameBoard.getCapturedPieces());
           break;
+        case WIN:
+          System.out.println("Player " + playerNumber+1 + " wins!");
         case QUIT:
           return true;
       }
