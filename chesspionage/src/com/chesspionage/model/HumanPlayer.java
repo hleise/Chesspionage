@@ -21,7 +21,8 @@ public class HumanPlayer implements Player {
   }
 
   //Methods
-  public PlayerAction makeMove(Square[][] squares) {
+  public PlayerAction makeMove(Board board) {
+    Square[][] squares = board.getBoardState();
 
     while(true){
       String command = user_input.next();

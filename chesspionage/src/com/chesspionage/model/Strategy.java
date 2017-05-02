@@ -1,5 +1,5 @@
 package com.chesspionage.model;
 
 public interface Strategy {
-  void findMove();
+  RankAndFile[] findMove(Square[][] squares, PieceColor pieceColor);
 }
