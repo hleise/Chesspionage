@@ -105,9 +105,6 @@ public class Piece {
                 }
                 //Forward movement
                 validMoves.add(new RankAndFile(X+verticalMovement,Y).getRankAndFile());
-              } else if (squares[X][Y+i].getPiece().getPieceColor() != pieceColor && squares[X-verticalMovement][Y+i].getPiece().getPieceColor() == pieceColor){
-                //Trapping
-                validMoves.add(new RankAndFile(X+verticalMovement, Y+i).getRankAndFile());
               }
             } else if(i != 0 && squares[X+verticalMovement][Y+i].getPiece().getPieceColor() != pieceColor){
               //Capturing

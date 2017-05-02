@@ -44,6 +44,7 @@ public class AIPlayer implements Player {
       if(enemyPiece != null)
       {
         enemyPiece.setCaptured();
+        board.addCapturedPiece(enemyPiece, PieceColor.DARK);
         System.out.println(enemyPiece.getPieceColor() + " " + enemyPiece.getPieceType() + " captured");
       }
     }

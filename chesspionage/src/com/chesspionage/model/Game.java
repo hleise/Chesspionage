@@ -81,7 +81,11 @@ public class Game {
           View.drawHiddenBoard(gameBoard.getBoardState());
           break;
         case CAPTURED:
-          System.out.println(gameBoard.getCapturedPieces());
+          System.out.println("Captured Light Pieces (O Pieces):");
+          System.out.println(gameBoard.getCapturedPieces(PieceColor.LIGHT));
+
+          System.out.println("Captured Dark Pieces (X Pieces):");
+          System.out.println(gameBoard.getCapturedPieces(PieceColor.DARK));
           break;
         case QUIT:
           return true;

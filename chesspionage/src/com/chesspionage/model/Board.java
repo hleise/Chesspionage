@@ -6,7 +6,8 @@ import java.util.ArrayList;
 public class Board {
   //Fields
   private Square[][] squares;
-  private ArrayList<Piece> capturedPieces;
+  private ArrayList<PieceType> capturedLightPieces;
+  private ArrayList<PieceType> capturedDarkPieces;
 
   //Constructors
   public Board() {
@@ -17,7 +18,8 @@ public class Board {
         squares[i][j] = new Square(i, j);
       }
     }
-    capturedPieces = new ArrayList<Piece>();
+    capturedLightPieces = new ArrayList<PieceType>();
+    capturedDarkPieces = new ArrayList<PieceType>();
   }
 
   //Methods
@@ -36,12 +38,20 @@ public class Board {
     this.squares = squares;
   }
 
-  public ArrayList<Piece> getCapturedPieces() {
-    return capturedPieces;
+  public ArrayList<PieceType> getCapturedPieces(PieceColor playerColor) {
+    if (playerColor.equals(PieceColor.LIGHT)) {
+      return capturedLightPieces;
+    } else {
+      return capturedDarkPieces;
+    }
   }
 
-  public void addCapturedPiece(Piece piece) {
-    this.capturedPieces.add(piece);
+  public void addCapturedPiece(Piece piece, PieceColor playerColor) {
+    if (playerColor.equals(PieceColor.LIGHT)) {
+      this.capturedLightPieces.add(piece.getPieceType());
+    } else {
+      this.capturedDarkPieces.add(piece.getPieceType());
+    }
   }
 
   /* Returns whether a given coordinate is a valid starting position for a given player color */
