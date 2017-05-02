@@ -161,11 +161,6 @@ public class Piece {
              if(squares[X+(2*verticalMovement)][Y+i].getPiece() == null){
                validMoves.add(RankAndFile.convert(X+(2*verticalMovement),Y+i));
              }
-           } else {
-             //Capturing en passant
-             if(squares[X][Y+i].getPiece().getPieceColor() != pieceColor && squares[X-verticalMovement][Y+i].getPiece().getPieceColor() == pieceColor){
-               validMoves.add(RankAndFile.convert(X+(2*verticalMovement),Y+i));
-             }
            }
          } else {
            //Normal capture
