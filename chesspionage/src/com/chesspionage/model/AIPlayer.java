@@ -36,7 +36,7 @@ public class AIPlayer implements Player {
       AverageImplementation avgStrat = new AverageImplementation();
       RankAndFile[] move = avgStrat.findMove(squares, pieceColor);
       Piece playerPiece = squares[move[0].getRank()][move[0].getFile()].getPiece();
-      Piece enemyPiece = squares[move[1].getRank()][move[1].getRank()].getPiece();
+      Piece enemyPiece = squares[move[1].getRank()][move[1].getFile()].getPiece();
 
       playerPiece.setRankAndFile(move[1].getRank(),move[1].getFile());
       squares[move[0].getRank()][move[0].getFile()].setPiece(null);

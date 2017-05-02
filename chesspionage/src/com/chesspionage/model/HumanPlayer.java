@@ -67,7 +67,7 @@ public class HumanPlayer implements Player {
           RankAndFile fromSquare = new RankAndFile(splitCommand[0]);
           RankAndFile toSquare = new RankAndFile(splitCommand[1]);
           Piece playerPiece = squares[fromSquare.getRank()][fromSquare.getFile()].getPiece();
-          Piece enemyPiece = squares[toSquare.getRank()][toSquare.getRank()].getPiece();
+          Piece enemyPiece = squares[toSquare.getRank()][toSquare.getFile()].getPiece();
 
           if (playerPiece == null || playerPiece.getPieceColor() != pieceColor || (enemyPiece != null && enemyPiece.getPieceColor() == pieceColor)) {
             System.out.println("Invalid command. Please try again ");

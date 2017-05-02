@@ -105,7 +105,10 @@ public class Game {
           System.out.println(gameBoard.getCapturedPieces(PieceColor.DARK));
           break;
         case WIN:
-          System.out.println("Player " + playerNumber+1 + " wins!");
+          System.out.println("Player " + (playerNumber + 1) + " wins!");
+          System.out.println();
+          System.out.println("Press Enter to return to the menu");
+          new Scanner(System.in).nextLine();
         case QUIT:
           return true;
       }
