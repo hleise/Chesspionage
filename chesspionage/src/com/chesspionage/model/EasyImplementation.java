@@ -13,17 +13,23 @@ public class EasyImplementation implements Strategy {
     int fromFile = 0;
     LinkedList<String> validMoves = null;
 
-    do {
-      fromRank = ThreadLocalRandom.current().nextInt(0, 8);
-      fromFile = ThreadLocalRandom.current().nextInt(0, 8);
-
-      playerPiece = squares[fromRank][fromFile].getPiece();
-      if (playerPiece != null) {
-        validMoves = new LinkedList<String>(playerPiece.getValidMoves(squares));
+    outerloop:
+    for (int x = 0; x < 8; x++) {
+      for (int y = 0; y < 8; y++) {
+        playerPiece = squares[x][y].getPiece();
+        if (playerPiece != null && playerPiece.getPieceColor() == pieceColor)
+        {
+          validMoves = new LinkedList<String>(playerPiece.getValidMoves(squares));
+          if (validMoves.peekFirst() != null)
+          {
+            fromRank = x;
+            fromFile = y;
+            break outerloop;
+          }
+        }
       }
-    } while (playerPiece == null || playerPiece.getPieceColor() != pieceColor || validMoves.peekFirst() == null);
+    }
     fromSquare = new RankAndFile(fromRank, fromFile);
-
 
     do {
       int idx = ThreadLocalRandom.current().nextInt(validMoves.size());
