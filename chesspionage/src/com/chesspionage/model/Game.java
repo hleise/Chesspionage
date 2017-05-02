@@ -45,8 +45,25 @@ public class Game {
       setPieces(PieceColor.DARK, new HashMap<Character, Integer>(pieceCounts));
       players[1] = new HumanPlayer(PieceColor.DARK);
     } else { // CPU Player
+      Utilities.clearScreen();
+      boolean difficultyNotSelected = true;
       autoSetPieces(PieceColor.DARK, new HashMap<Character, Integer>(pieceCounts));
-      players[1] = new AIPlayer(PieceColor.DARK, SkillLevel.Easy);
+
+      while(difficultyNotSelected) {
+        System.out.println("Select the AI difficulty ('easy' or 'average')");
+        Scanner reader = new Scanner(System.in);
+        String difficulty = reader.next().toLowerCase();
+
+        if (difficulty.equals("easy")) {
+          players[1] = new AIPlayer(PieceColor.DARK, SkillLevel.Easy);
+          difficultyNotSelected = false;
+        } else if (difficulty.equals("average")) {
+          players[1] = new AIPlayer(PieceColor.DARK, SkillLevel.Average);
+          difficultyNotSelected = false;
+        } else {
+          System.out.println("Not a valid difficulty");
+        }
+      }
     }
 
     runGame();
