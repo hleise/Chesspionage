@@ -5,7 +5,8 @@ import java.util.ArrayList;
 /* Board is essentially comprised of a 2d array of squares and contains relevant board methods */
 public class Board {
   //Fields
-  public Square[][] squares;
+  private Square[][] squares;
+  private ArrayList<Piece> capturedPieces;
 
   //Constructors
   public Board() {
@@ -16,6 +17,7 @@ public class Board {
         squares[i][j] = new Square(i, j);
       }
     }
+    capturedPieces = new ArrayList<Piece>();
   }
 
   //Methods
@@ -28,6 +30,18 @@ public class Board {
   public Square[][] getBoardState() {
     //Return the contents of all squares on the board
     return squares;
+  }
+
+  public void setBoardState(Square[][] squares) {
+    this.squares = squares;
+  }
+
+  public ArrayList<Piece> getCapturedPieces() {
+    return capturedPieces;
+  }
+
+  public void addCapturedPiece(Piece piece) {
+    this.capturedPieces.add(piece);
   }
 
   /* Returns whether a given coordinate is a valid starting position for a given player color */

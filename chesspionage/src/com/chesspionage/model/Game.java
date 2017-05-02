@@ -69,7 +69,7 @@ public class Game {
     if(playerNumber == 0){ pieceColor = PieceColor.LIGHT;}
     else {pieceColor = PieceColor.DARK;}
     while(true){
-      switch(players[playerNumber].makeMove(gameBoard.getBoardState())){
+      switch(players[playerNumber].makeMove(gameBoard)){
         case PLAY:
           return false;
         case SHOW:
@@ -81,7 +81,7 @@ public class Game {
           View.drawHiddenBoard(gameBoard.getBoardState());
           break;
         case CAPTURED:
-
+          System.out.println(gameBoard.getCapturedPieces());
           break;
         case QUIT:
           return true;
@@ -138,7 +138,7 @@ public class Game {
 
                   Piece piece = new Piece(playerColor, currPiece, coordinate);
                   piece.setRankAndFile(coordinate.getRank(), coordinate.getFile());
-                  gameBoard.squares[coordinate.getRank()][coordinate.getFile()].setPiece(piece);
+                  gameBoard.getBoardState()[coordinate.getRank()][coordinate.getFile()].setPiece(piece);
 
                   set = true;
                   pieceCounts.put('t', pieceCounts.get('t') - 1);
@@ -163,7 +163,7 @@ public class Game {
       for (RankAndFile position: startingPositions) {
         Piece piece = new Piece(playerColor, pieceArray.get(0), position);
         piece.setRankAndFile(position.getRank(), position.getFile());
-        gameBoard.squares[position.getRank()][position.getFile()].setPiece(piece);
+        gameBoard.getBoardState()[position.getRank()][position.getFile()].setPiece(piece);
         pieceArray.remove(0);
         pieceCounts.put('t', pieceCounts.get('t') - 1);
       }
