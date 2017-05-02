@@ -4,5 +4,5 @@ package com.chesspionage.model;
  * Created by r1413 on 4/30/17.
  */
 public enum PlayerAction {
-  TOGGLE, PLAY, QUIT
+  PLAY, SHOW, HIDE, CAPTURED, QUIT, WIN
 }

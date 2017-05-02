@@ -95,21 +95,29 @@ public class Piece {
         if(pieceColor == PieceColor.LIGHT){verticalMovement = 1;}
         else {verticalMovement = -1; }
 
-        if(X + verticalMovement <= 7 || X + verticalMovement >= 0) {
-          if (squares[X + verticalMovement][Y].getPiece() == null) {
-            validMoves.add(new RankAndFile(X + verticalMovement, Y).rankAndFile);
-            if (!hasMoved && squares[X + 2 * verticalMovement][Y].getPiece() == null) {
-              validMoves.add(new RankAndFile(X + 2 * verticalMovement, Y).rankAndFile);
+        for(int i = -1; i < 2; i++){
+          try{
+            if (squares[X+verticalMovement][Y+i].getPiece() == null){
+              if(i == 0){
+                if(!hasMoved && squares[X+(2*verticalMovement)][Y].getPiece() == null){
+                  //Starting move
+                  validMoves.add(new RankAndFile(X+(2*verticalMovement),Y).getRankAndFile());
+                }
+                //Forward movement
+                validMoves.add(new RankAndFile(X+verticalMovement,Y).getRankAndFile());
+              } else if (squares[X][Y+i].getPiece().getPieceColor() != pieceColor && squares[X-verticalMovement][Y+i].getPiece().getPieceColor() == pieceColor){
+                //Trapping
+                validMoves.add(new RankAndFile(X+verticalMovement, Y+i).getRankAndFile());
+              }
+            } else if(i != 0 && squares[X+verticalMovement][Y+i].getPiece().getPieceColor() != pieceColor){
+              //Capturing
+              validMoves.add(new RankAndFile(X+verticalMovement, Y+i).getRankAndFile());
             }
-          }
-          if (squares[X + verticalMovement][Y - 1].getPiece() != null && squares[X + verticalMovement][Y - 1].getPiece().getPieceColor() != pieceColor) {
-            validMoves.add(new RankAndFile(X + verticalMovement, Y - 1).rankAndFile);
-          }
-          if (squares[X + verticalMovement][Y + 1].getPiece() != null && squares[X + verticalMovement][Y + 1].getPiece().getPieceColor() != pieceColor) {
-            validMoves.add(new RankAndFile(X + verticalMovement, Y + 1).rankAndFile);
+
+          } catch (ArrayIndexOutOfBoundsException e){
+            continue;
           }
         }
-        //Add logic for trapping
         break;
       case QUEEN:
       case ROOK:
