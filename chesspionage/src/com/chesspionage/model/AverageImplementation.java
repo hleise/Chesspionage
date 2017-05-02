@@ -11,13 +11,14 @@ public class AverageImplementation implements Strategy {
     RankAndFile toSquare = null;
     int fromRank = 0;
     int fromFile = 0;
-    LinkedList<String> validMoves = new LinkedList<String>(playerPiece.getValidMoves(squares));
+    LinkedList<String> validMoves = null;
 
     do {
       fromRank = ThreadLocalRandom.current().nextInt(0, 8);
       fromFile = ThreadLocalRandom.current().nextInt(0, 8);
 
       playerPiece = squares[fromRank][fromFile].getPiece();
+      validMoves = new LinkedList<String>(playerPiece.getValidMoves(squares));
     } while (playerPiece == null || playerPiece.getPieceColor() != pieceColor || validMoves.peekFirst() == null);
     fromSquare = new RankAndFile(fromRank, fromFile);
 
