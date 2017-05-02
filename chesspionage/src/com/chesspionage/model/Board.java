@@ -46,8 +46,8 @@ public class Board {
     }
   }
 
-  public void addCapturedPiece(Piece piece, PieceColor playerColor) {
-    if (playerColor.equals(PieceColor.LIGHT)) {
+  public void addCapturedPiece(Piece piece) {
+    if (piece.getPieceColor().equals(PieceColor.LIGHT)) {
       this.capturedLightPieces.add(piece.getPieceType());
     } else {
       this.capturedDarkPieces.add(piece.getPieceType());
