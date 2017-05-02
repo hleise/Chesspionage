@@ -72,13 +72,16 @@ public class Game {
       switch(players[playerNumber].makeMove(gameBoard.getBoardState())){
         case PLAY:
           return false;
-        case TOGGLE:
+        case SHOW:
           Utilities.clearScreen();
           View.drawVisibleBoard(gameBoard.getBoardState(), pieceColor);
-          System.out.println("Press enter when finished examining board");
-          new Scanner(System.in).nextLine();
+          break;
+        case HIDE:
           Utilities.clearScreen();
           View.drawHiddenBoard(gameBoard.getBoardState());
+          break;
+        case CAPTURED:
+
           break;
         case QUIT:
           return true;

@@ -24,20 +24,27 @@ public class HumanPlayer implements Player {
   public PlayerAction makeMove(Square[][] squares) {
 
     while(true){
+      System.out.println("Select a move, or type 'commands' for more instructions");
+
       String command = user_input.next();
       switch(command.toLowerCase()){
         case("commands"):
+          // Print commands logic
           printOptions();
           break;
+        case("show"):
         case("2"):
-          //Toggle piece logic
-          return PlayerAction.TOGGLE;
+          // Show pieces logic
+          return PlayerAction.SHOW;
         case("3"):
+        case("hide"):
+          // Hide pieces logic
+          return PlayerAction.HIDE;
+        case("4"):
         case("captured"):
           //Show captured logic
-
-          break;
-        case("4"):
+          return PlayerAction.CAPTURED;
+        case("5"):
         case("quit"):
           //Game exit logic
           System.out.println("Goodbye!");
@@ -48,26 +55,28 @@ public class HumanPlayer implements Player {
         default:
           Pattern pattern = Pattern.compile("^[a-h][1-8]->[a-h][1-8]$");
           Matcher matcher = pattern.matcher(command);
-          boolean validCommand = matcher.matches();
-          if(!validCommand){
+
+          if(!matcher.matches()){ // if invalid command
             System.out.println("Invalid command: " + command + " Please try again");
             break;
           }
+
           //Move logic
           String[] splitCommand = Pattern.compile("->").split(command);
           RankAndFile fromSquare = new RankAndFile(splitCommand[0]);
           RankAndFile toSquare = new RankAndFile(splitCommand[1]);
           Piece playerPiece = squares[fromSquare.getRank()][fromSquare.getFile()].getPiece();
           Piece enemyPiece = squares[toSquare.getRank()][toSquare.getRank()].getPiece();
+
           if (playerPiece == null || playerPiece.getPieceColor() != pieceColor || (enemyPiece != null && enemyPiece.getPieceColor() == pieceColor)) {
             System.out.println("Invalid command. Please try again");
             break;
           }
+
           if(!playerPiece.getValidMoves(squares).contains(toSquare.rankAndFile)){
             System.out.println("Not a valid move. Please try again");
             break;
-          }
-          else{
+          } else{
             playerPiece.setRankAndFile(toSquare.getRank(),toSquare.getFile());
             squares[fromSquare.getRank()][fromSquare.getFile()].setPiece(null);
             squares[toSquare.getRank()][toSquare.getFile()].setPiece(playerPiece);
@@ -83,10 +92,11 @@ public class HumanPlayer implements Player {
   }
 
   private void printOptions(){
-    System.out.println("Choose an action");
-    System.out.println("  1. Move Piece");
-    System.out.println("  2. Show Pieces");
-    System.out.println("  3. Show Captured");
-    System.out.println("  4. Quit to Menu");
+    System.out.println("Choose an action:");
+    System.out.println("  1. Move Piece (ex: d2->d3)");
+    System.out.println("  2. Show Pieces ('show')");
+    System.out.println("  3. Hide Pieces ('hide')");
+    System.out.println("  4. Show Captured ('captured')");
+    System.out.println("  5. Quit to Menu ('quit')");
   }
 }
