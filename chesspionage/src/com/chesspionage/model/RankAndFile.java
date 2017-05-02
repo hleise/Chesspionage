@@ -11,7 +11,7 @@ public class RankAndFile {
   private int rank; // aka row in chess terms
   private int file; // aka column in chess terms
   String rankAndFile; // coordinate in chess notation such as 'h7'
-  public final Map<String, Integer> stringToInt = new HashMap<String, Integer>() {{
+  public static final Map<String, Integer> stringToInt = new HashMap<String, Integer>() {{
     put("a",0);
     put("b",1);
     put("c",2);
@@ -21,7 +21,7 @@ public class RankAndFile {
     put("g",6);
     put("h",7);
   }};
-  public final Map<Integer, String> intToString = new HashMap<Integer, String>() {{
+  public static final Map<Integer, String> intToString = new HashMap<Integer, String>() {{
     put(0,"a");
     put(1,"b");
     put(2,"c");
@@ -88,5 +88,9 @@ public class RankAndFile {
       return true;
     }
     return false;
+  }
+
+  public static String convert(int rank, int file){
+    return intToString.get(rank) + file;
   }
 }

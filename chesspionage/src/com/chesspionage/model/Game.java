@@ -87,6 +87,8 @@ public class Game {
           System.out.println("Captured Dark Pieces (X Pieces):");
           System.out.println(gameBoard.getCapturedPieces(PieceColor.DARK));
           break;
+        case WIN:
+          System.out.println("Player " + playerNumber+1 + " wins!");
         case QUIT:
           return true;
       }
